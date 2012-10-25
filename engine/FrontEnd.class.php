@@ -33,6 +33,7 @@
             /* some useful variables */
             $this->assign('REQUEST_URI', $_SERVER['REQUEST_URI']);
             $this->assign('SOFTWARE_NAME', 'PostfixSQLAdmin');
+            $this->assign('SOFTWARE_VERSION', 'alpha0.1');
             $this->assign('CFG_SKIN', CFG_SKIN);
 
             if ( defined('CFG_LOGO') )

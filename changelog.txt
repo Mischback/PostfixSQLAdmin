@@ -1,0 +1,3 @@
+alpha0.1:
+  * project started
+  * build the FrontEnd with a basic layout
