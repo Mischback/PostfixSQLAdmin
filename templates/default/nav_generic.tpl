@@ -1,6 +1,6 @@
 {*
     nav_generic.tpl
 *}
-{include file="$NAV_GENERIC_LINK"}<div><div><div>
+{include file="$NAV_GENERIC_LINK"}<div><div><div><div>
     {$NAV_GENERIC_CAPTION}
-</div></div></div></a>
+</div></div></div></div></a>
