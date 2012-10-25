@@ -7,66 +7,67 @@
 
 /* ***** GENERAL SETTINGS ***** */
 * {
-    margin: 0;
-    padding: 0;
+    margin:             0;
+    padding:            0;
 }
 
 body {
-    font-family: Tahoma, Helvetica, sans-serif;
-    font-size: 10pt;
-    text-align: center;
-    background: url(gfx/bg_body.gif) top left;
+    font-family:        Tahoma, Helvetica, sans-serif;
+    font-size:          10pt;
+    text-align:         center;
+    background:         url(gfx/bg_body.gif) top left;
 }
 
 a, a:link, a:visited, a:active {
-    text-decoration: none;
+    text-decoration:    none;
 }
 a:hover {
-    text-decoration: underline;
+    text-decoration:    underline;
 }
 
 
 /* ***** LAYOUT ***** */
 div#layout {
-    background-color: #eee;
+    background-color:   #eee;
 }
 div#layout>div,
 div#footer {
-    margin: 0 auto;
-    padding: 1px;
-    width: 980px;
+    margin:             0 auto;
+    padding:            1px;
+    width:              980px;
 }
 div#content {
-    margin: 10px 20px 20px 20px;
-    padding: 0;
-    text-align: left;
+    margin:             10px 20px 20px 20px;
+    padding:            0;
+    text-align:         left;
 }
 div#footer {
-    text-align: left;
+    padding-left:       40px;
+    text-align:         left;
 }
 div#footer a, div#footer a:link, div#footer a:visited, div#footer a:active {
-    color: #777;
+    color:              #777;
 }
 
 /* ***** HEADER ***** */
 div#header {
-    background: #222 url(gfx/bg_page_head_left.gif) top left repeat-y;
+    background:         #222 url(gfx/bg_page_head_left.gif) top left repeat-y;
 }
 div#header>div {
-    background: url(gfx/bg_page_head_bottom.gif) bottom left repeat-x;
+    background:         url(gfx/bg_page_head_bottom.gif) bottom left repeat-x;
 }
 div#header>div>div {
-    background: url(gfx/bg_page_head_right.gif) top right repeat-y;
+    background:         url(gfx/bg_page_head_right.gif) top right repeat-y;
 }
 div#header>div>div>div {
-    background: url(gfx/bg_page_head_bottom_left.gif) bottom left no-repeat;
+    background:         url(gfx/bg_page_head_bottom_left.gif) bottom left no-repeat;
 }
 div#header>div>div>div>div {
-    text-align: left;
-    background: url(gfx/bg_page_head_bottom_right.gif) bottom right no-repeat;
+    text-align:         left;
+    background:         url(gfx/bg_page_head_bottom_right.gif) bottom right no-repeat;
 }
 div#header>div>div>div>div img {
-    margin: 5px 0 5px 10px;
-    border: none;
+    margin:             5px 0 5px 10px;
+    border:             none;
 }
 
