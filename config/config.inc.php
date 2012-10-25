@@ -27,4 +27,33 @@
      */
     define('CFG_SMARTY_PATH', './lib/smarty/');
 
+
+    /** @brief  Controls, which database type should be used
+     *
+     *  Possible values are:
+     *      * mysql
+     *      * postgre TODO: not yet implemented
+     */
+    define('CFG_DATABASE_TYPE', 'mysql');
+
+    /** @brief  Toggle the usage of PDO
+     */
+    define('CFG_DATABASE_PDO', true);
+
+    /** @brief  The host of the database
+     */
+    define('CFG_DATABASE_HOST', 'localhost');
+
+    /** @brief  The user to connect to the database
+     */
+    define('CFG_DATABASE_USER', 'root');
+
+    /** @brief  The database user's password
+     */
+    define('CFG_DATABASE_PASS', '');
+
+    /** @brief  The name of the database
+     */
+    define('CFG_DATABASE_BASE', 'postfix');
+
 ?>
