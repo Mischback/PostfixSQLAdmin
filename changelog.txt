@@ -1,3 +1,8 @@
+alpha0.2:
+  * Database layer implemented
+  	* DatabaseInterface and Database class are used by the real engine
+	* the Database engines, i.e. DatabasePDO are another layer of abstraction,
+	which will do the real work
 alpha0.1:
   * project started
   * build the FrontEnd with a basic layout
