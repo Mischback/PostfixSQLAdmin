@@ -78,3 +78,96 @@ div#header>div>div>div>div img {
     border:             none;
 }
 
+
+/* ***** NAVIGATION ***** */
+div#navigation {
+    width:              200px;
+    float:              right;
+    font-weight:        bold;
+    font-size:          14px;
+}
+div#navigation a, div#navigation a:link, div#navigation a:visited, div#navigation a:active, div#navigation a:hover {
+    text-decoration:    none;
+}
+
+div#navigation>a div {
+    height:             22px;
+}
+
+
+div#navigation>a>div {
+    margin-top:         5px;
+    background:         url(gfx/button_nav_tile.gif) 0 0 repeat-x;
+}
+div#navigation>a:hover>div {
+    background-position:    0 -22px;
+}
+
+div#page_home div#navigation>a.nav_button_home>div,
+div#page_domain div#navigation>a.nav_button_domain>div,
+div#page_user div#navigation>a.nav_button_user>div,
+div#page_alias div#navigation>a.nav_button_alias>div {
+    background-position:    0 -44px;
+}
+div#page_home div#navigation>a.nav_button_home:hover>div,
+div#page_domain div#navigation>a.nav_button_domain:hover>div,
+div#page_user div#navigation>a.nav_button_user:hover>div,
+div#page_alias div#navigation>a.nav_button_alias:hover>div {
+    background-position:    0 -66px;
+}
+
+
+div#navigation>a>div>div {
+    background:         url(gfx/button_nav_right.gif) 100% 0 no-repeat;
+}
+div#navigation>a:hover>div>div {
+    background-position:    100% -22px;
+}
+
+div#page_home div#navigation>a.nav_button_home>div>div,
+div#page_domain div#navigation>a.nav_button_domain>div>div,
+div#page_user div#navigation>a.nav_button_user>div>div,
+div#page_alias div#navigation>a.nav_button_alias>div>div {
+    background-position:    100% -44px;
+}
+div#page_home div#navigation>a.nav_button_home:hover>div>div,
+div#page_domain div#navigation>a.nav_button_domain:hover>div>div,
+div#page_user div#navigation>a.nav_button_user:hover>div>div,
+div#page_alias div#navigation>a.nav_button_alias:hover>div>div {
+    background-position:    100% -66px;
+}
+
+
+div#navigation>a>div>div>div {
+    padding:            2px 0 0 30px;
+    color:              #ddd;
+}
+
+div#navigation>a.nav_button_home>div>div>div {
+    background:         url(gfx/button_nav_home.gif) 0 0 no-repeat;
+}
+div#navigation>a.nav_button_domain>div>div>div {
+    background:         url(gfx/button_nav_domain.gif) 0 0 no-repeat;
+}
+div#navigation>a.nav_button_user>div>div>div {
+    background:         url(gfx/button_nav_mail.gif) 0 0 no-repeat;
+}
+div#navigation>a.nav_button_alias>div>div>div {
+    background:         url(gfx/button_nav_alias.gif) 0 0 no-repeat;
+}
+
+div#navigation>a:hover>div>div>div {
+    background-position:    0 -22px;
+}
+div#page_home div#navigation>a.nav_button_home>div>div>div,
+div#page_domain div#navigation>a.nav_button_domain>div>div>div,
+div#page_user div#navigation>a.nav_button_user>div>div>div,
+div#page_alias div#navigation>a.nav_button_alias>div>div>div {
+    background-position:    0 -44px;
+}
+div#page_home div#navigation>a.nav_button_home:hover>div>div>div,
+div#page_domain div#navigation>a.nav_button_domain:hover>div>div>div,
+div#page_user div#navigation>a.nav_button_user:hover>div>div>div,
+div#page_alias div#navigation>a.nav_button_alias:hover>div>div>div {
+    background-position:    0 -66px;
+}

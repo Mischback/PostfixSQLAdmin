@@ -9,6 +9,6 @@
     require_once('./engine/FrontEnd.class.php');
     $frontend = new FrontEnd();
 
-    $frontend->display('layout.tpl');
+    $frontend->display('home.tpl');
 
 ?>

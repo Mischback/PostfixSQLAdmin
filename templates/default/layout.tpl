@@ -30,6 +30,6 @@
         <a href="index.php" title="descLogout">logout</a> | 
         <a href="#pagehead" title="backToTop">top</a>
     </div>
-    <a href="http://mischback.de" title="toStartPage">{$SOFTWARE_NAME}</a>
+    <a href="http://mischback.de" title="toManufactor">{$SOFTWARE_NAME}</a>
 </div>
 {/block}
