@@ -13,6 +13,11 @@
     define('CFG_SKIN', 'default');
 
 
+    /** @brief  A custom logo may be specified here
+     */
+    // define('CFG_LOGO', 'logo.jpg');
+
+
     /** @brief  The path to the Smarty library
      *
      *  This specifies the path to the Smarty library.

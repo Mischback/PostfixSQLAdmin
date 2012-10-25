@@ -8,7 +8,10 @@
 <div id="layout">
     <div>
         <div id="header"><div><div><div><div>
-            <a href="index.php" title="toStartPage"><img src="templates/{$CFG_SKIN}/gfx/logo.jpg" alt="Logo" title="toStartPage" /></a>
+            <a href="index.php" title="toStartPage">
+                <img src="{if isset($CFG_LOGO)}{$CFG_LOGO}{else}templates/{$CFG_SKIN}/gfx/logo.jpg{/if}" alt="Logo" title="toStartPage" />
+            </a>
+
         </div></div></div></div></div>
 
         <div id="content">
