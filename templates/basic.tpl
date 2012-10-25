@@ -13,6 +13,7 @@
 
     <head>
         <title>{block name="page_title"}page_title{/block}</title>
+        <link href="templates/{$CFG_SKIN}/style.css" type="text/css" rel="stylesheet" />
     </head>
 
     <body>

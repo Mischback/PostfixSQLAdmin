@@ -32,6 +32,8 @@
 
             /* some useful variables */
             $this->assign('REQUEST_URI', $_SERVER['REQUEST_URI']);
+            $this->assign('SOFTWARE_NAME', 'PostfixSQLAdmin');
+            $this->assign('CFG_SKIN', CFG_SKIN);
         }
 
     }
