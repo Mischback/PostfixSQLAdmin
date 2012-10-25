@@ -14,9 +14,9 @@
 
         </div></div></div></div></div>
 
-        <div id="content">
-{block name="layout_content"}
-    <strong>layout.tpl - layout_content</strong><br />
+        <div id="canvas">
+{block name="layout_canvas"}
+    <strong>layout.tpl - layout_canvas</strong><br />
     <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
 {/block}
         </div>
@@ -25,6 +25,11 @@
 </div>
 
 <div id="footer">
-    <a href="index.php" title="toStartPage">{$SOFTWARE_NAME}</a>
+    <div class="foot_nav">
+        <a href="index.php" title="toStartPage">StartPage</a> | 
+        <a href="index.php" title="descLogout">logout</a> | 
+        <a href="#pagehead" title="backToTop">top</a>
+    </div>
+    <a href="http://mischback.de" title="toStartPage">{$SOFTWARE_NAME}</a>
 </div>
 {/block}

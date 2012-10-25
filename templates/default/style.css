@@ -36,18 +36,25 @@ div#footer {
     padding:            1px;
     width:              980px;
 }
-div#content {
+div#canvas {
     margin:             10px 20px 20px 20px;
     padding:            0;
     text-align:         left;
 }
 div#footer {
     padding-left:       40px;
+    font-size:          10px;
+    color:              #999;
     text-align:         left;
 }
 div#footer a, div#footer a:link, div#footer a:visited, div#footer a:active {
     color:              #777;
 }
+div#footer div.foot_nav {
+    margin-right:       40px;
+    float:              right;
+}
+
 
 /* ***** HEADER ***** */
 div#header {
