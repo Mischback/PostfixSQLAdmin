@@ -58,6 +58,11 @@
             }
             elseif ( isset($name) ) {
                 $tmp_data = $dao->getDomainByName($name);
+
+                if ( !$tmp_data ) {
+                    $dao->createDomain($name);
+                    $tmp_data = $dao->getDomainByName($name);
+                }
             }
 
             if ( $tmp_data ) {

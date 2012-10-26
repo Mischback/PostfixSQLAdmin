@@ -13,6 +13,16 @@
     require_once('./engine/Domain.class.php');
 
 
+    /* MAGIC START HERE! */
+
+    /* CREATE new domain
+     */
+    if ( isset($_POST['create_domain_name']) && ($_POST['create_domain_name'] != '') ) {
+
+        $tmp_dom = new Domain(NULL, $_POST['create_domain_name']);
+    }
+
+
     /* list all available domains */
     $dom_list = array();
     foreach ( new DomainList() as $dom ) {

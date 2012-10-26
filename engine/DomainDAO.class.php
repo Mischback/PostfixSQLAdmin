@@ -101,6 +101,27 @@
 
             return $result;
         }
+
+
+        /** @brief  Creates a new domain
+         */
+        public function createDomain($name) {
+
+            /* connect to the database */
+            $db = new Database();
+
+            /* prepare the statment */
+            $db->Prepare('INSERT INTO domains VALUES (NULL, ?)');
+
+            /* bind the parameter */
+            $db->BindParam(1, $name);
+
+            /* execute the statement */
+            $db->StmtExecute();
+
+            /* terminate the connection */
+            $db->Disconnect();
+        }
     }
 
 ?>
