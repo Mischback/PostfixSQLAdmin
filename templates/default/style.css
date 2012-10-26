@@ -61,6 +61,38 @@ button.inline:hover>div>div>div {
     background-position:    0 -18px;
 }
 
+button.big div {
+    height:             33px;
+}
+button.big>div {
+    background:         url(gfx/button_big_tile.gif) 0 0 repeat-x;
+}
+button.big:hover>div {
+    background-position:    0 -33px;
+}
+button.big>div>div {
+    background:         url(gfx/button_big_right.gif) 100% 0 no-repeat;
+}
+button.big:hover>div>div {
+    background-position:    100% -33px;
+}
+button.big>div>div>div {
+    background:             0 0 no-repeat;
+}
+button.big:hover>div>div>div {
+    background-position:    0 -33px;
+}
+
+button.confirm>div>div>div {
+    background-image:   url(gfx/button_big_confirm.gif);
+}
+button.confirm>div>div>div>div {
+    padding:            8px 7px 0 45px;
+    font-size:          14px;
+    font-weight:        bold;
+    color:              #ddd;
+}
+
 /* tables */
 table {
     border-collapse:    collapse;
@@ -186,6 +218,18 @@ div#domain_overview div#create_new_domain {
 }
 div#domain_overview div#create_new_domain button.inline>div>div>div {
     background-image:   url(gfx/button_inline_create_domain.gif);
+}
+
+div#page_domain_confirm_delete {
+    margin:             20px 0 30px 0;
+    text-align:         center;
+}
+div#page_domain_confirm_delete button.confirm:hover>div,
+div#page_domain_confirm_delete button.confirm:hover>div>div>div {
+    background-position:    0 -99px;
+}
+div#page_domain_confirm_delete button.confirm:hover>div>div {
+    background-position:    100% -99px;
 }
 
 

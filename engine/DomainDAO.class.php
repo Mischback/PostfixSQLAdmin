@@ -122,6 +122,28 @@
             /* terminate the connection */
             $db->Disconnect();
         }
+
+
+        /** @brief  Deletes an existing domain by its id
+         *  @param  INT $id
+         */
+        public function deleteDomainByID($id) {
+            
+            /* connect to the database */
+            $db = new Database();
+
+            /* prepare the statment */
+            $db->Prepare('DELETE FROM domains WHERE domain_id = ? LIMIT 1');
+
+            /* bind the parameter */
+            $db->BindParam(1, $id);
+
+            /* execute the statement */
+            $db->StmtExecute();
+
+            /* terminate the connection */
+            $db->Disconnect();
+        }
     }
 
 ?>

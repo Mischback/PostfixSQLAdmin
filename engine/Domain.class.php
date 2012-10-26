@@ -72,6 +72,15 @@
             }
         }
 
+
+        /** @brief  Deletes an object
+         */
+        public function deleteDomain() {
+
+            $dao = new DomainDAO();
+            $dao->deleteDomainByID($this->domain_id);
+        }
+
     }
 
 
