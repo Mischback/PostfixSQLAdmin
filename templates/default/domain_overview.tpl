@@ -22,5 +22,12 @@
 {/section}
     </table>
 
+
+    <h3>Create New Domain</h3>
+
+    <div id="create_new_domain">
+{include file="domain_form_create.tpl"}
+    </div>
+
 </div>
 {/block}

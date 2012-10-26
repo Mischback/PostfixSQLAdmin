@@ -25,6 +25,12 @@ a:hover {
     text-decoration:    underline;
 }
 
+/* input */
+input {
+    padding:            1px 5px;
+    border:             1px solid #aaa;
+}
+
 /* tables */
 table {
     border-collapse:    collapse;
@@ -112,6 +118,10 @@ table.domain_list td.col2 {
     padding:            0 5px 0 15px;
     text-align:         right;
     border-right:       1px solid #aaa;
+}
+
+div#domain_overview div#create_new_domain {
+    margin:             5px 0 10px 10px;
 }
 
 
