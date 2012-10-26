@@ -61,24 +61,34 @@ button.inline:hover>div>div>div {
     background-position:    0 -18px;
 }
 
+a.big div {
+    height:             33px;
+    display:            inline-block;
+}
 button.big div {
     height:             33px;
 }
+a.big>div,
 button.big>div {
     background:         url(gfx/button_big_tile.gif) 0 0 repeat-x;
 }
+a.big:hover>div,
 button.big:hover>div {
     background-position:    0 -33px;
 }
+a.big>div>div,
 button.big>div>div {
     background:         url(gfx/button_big_right.gif) 100% 0 no-repeat;
 }
+a.big:hover>div>div,
 button.big:hover>div>div {
     background-position:    100% -33px;
 }
+a.big>div>div>div,
 button.big>div>div>div {
     background:             0 0 no-repeat;
 }
+a.big:hover>div>div>div,
 button.big:hover>div>div>div {
     background-position:    0 -33px;
 }
@@ -86,6 +96,10 @@ button.big:hover>div>div>div {
 button.confirm>div>div>div {
     background-image:   url(gfx/button_big_confirm.gif);
 }
+a.decline>div>div>div {
+    background-image:   url(gfx/button_big_decline.gif);
+}
+a.decline>div>div>div>div,
 button.confirm>div>div>div>div {
     padding:            8px 7px 0 45px;
     font-size:          14px;
