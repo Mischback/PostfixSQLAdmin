@@ -14,6 +14,17 @@
      */
     class Domain {
 
+        /** @brief  This variable controls, if a database update is neccessary
+         *
+         *  For the Domain class, this is only the case, if the function 
+         *  setDomainName() is used.
+         *
+         *  The acutal update to the DB will happen on object destruction. See
+         *  __destruct() for further details.
+         */
+        private $modified = false;
+
+
         /** @brief  The domain's ID
          */
         private $domain_id = NULL;
@@ -33,6 +44,15 @@
          */
         public function getDomainName() {
             return $this->domain_name;
+        }
+
+        /** @brief  Sets the domain's name
+         */
+        public function setDomainName($name) {
+
+            // TODO: insert some parsing here!
+            $this->domain_name = $name;
+            $this->modified = true;
         }
 
 
@@ -72,11 +92,26 @@
             }
         }
 
+        /** @brief  The destructor
+         *
+         *  This function is called, when the object is destructed. In PHP
+         *  objects get destructed, if all references to the object are deleted.
+         *
+         *  If the object has been changed in its lifecycle, this will perform
+         *  an update of the database tables.
+         */
+        public function __destruct() {
+            
+            if ( $this->modified ) {
+                $dao = new DomainDAO();
+                $dao->updateDomain($this->domain_id, $this->domain_name);
+            }
+        }
+
 
         /** @brief  Deletes an object
          */
         public function deleteDomain() {
-
             $dao = new DomainDAO();
             $dao->deleteDomainByID($this->domain_id);
         }

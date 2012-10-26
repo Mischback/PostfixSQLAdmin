@@ -144,6 +144,30 @@
             /* terminate the connection */
             $db->Disconnect();
         }
+
+
+        /** @brief  Updates an existing domain
+         *  @param  INT $id
+         *  @param  STRING $name
+         */
+        public function updateDomain($id, $name) {
+            
+            /* connect to the database */
+            $db = new Database();
+
+            /* prepare the statment */
+            $db->Prepare('UPDATE domains SET domain_name = ? WHERE domain_id = ? LIMIT 1');
+
+            /* bind variables to the result columns */
+            $db->BindParam(1, $name);
+            $db->BindParam(2, $id);
+
+            /* execute the statement */
+            $db->StmtExecute();
+
+            /* terminate the connection */
+            $db->Disconnect();
+        }
     }
 
 ?>

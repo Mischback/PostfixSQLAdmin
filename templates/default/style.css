@@ -245,6 +245,17 @@ div#page_domain_confirm_delete button.confirm:hover>div>div>div {
 div#page_domain_confirm_delete button.confirm:hover>div>div {
     background-position:    100% -99px;
 }
+div#domain_modify p {
+    margin:             10px;
+}
+div#domain_modify div#domain_modify_form_box {
+    text-align:         center;
+}
+div#domain_modify div#domain_modify_form_box input {
+    margin:             10px 0;
+    font-size:          14pt;
+    width:              300px;
+}
 
 
 /* ***** NAVIGATION ***** */
