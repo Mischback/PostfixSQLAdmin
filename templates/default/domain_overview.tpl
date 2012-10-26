@@ -13,10 +13,10 @@
             <td class="col1">{$DOMAIN_LIST[row].name}</td>
             <td class="col2">{$DOMAIN_LIST[row].users}</td>
             <td class="col3 button_col">
-modifyButton
+{include file="domain_form_modify.tpl" DOMAIN_ID=$DOMAIN_LIST[row].id}
             </td>
             <td class="col4 button_col">
-deleteButton
+{include file="domain_form_delete.tpl" DOMAIN_ID=$DOMAIN_LIST[row].id}
             </td>
         </tr>
 {/section}
