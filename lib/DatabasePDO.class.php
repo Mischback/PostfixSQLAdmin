@@ -1,7 +1,7 @@
 <?php
 
     /** @file   DatabasePDO.class.php
-     *  @brief  TODO: insert smart description here!
+     *  @brief  Contains the implementations of the DatabaseInterface using PDO
      */
 
 
@@ -10,7 +10,22 @@
 
 
     /** @class  DatabasePDO
-     *  @brief  TODO: insert smart description here!
+     *  @brief  Abstract class of PDO implementation
+     *
+     *  PHP Data Objects (PDO) provide a consistent interface to access
+     *  different types of databases. Because of the standardised interface
+     *  provided by PDO, most of the implementation can be done in this
+     *  abstract class.
+     *
+     *  To improve the performance, database connections are not closed 
+     *  immediatly after finishing the request. 
+     *
+     *  The connections are reused. For this purpose a list of instances
+     *  ($intanceList) is kept. When a statement is finished, it will be marked
+     *  as available and can be used for another statement.
+     *
+     *  Of course, if a second connection is necessary, a second connection 
+     *  will be created.
      */
     abstract class DatabasePDO implements DatabaseInterface {
 
@@ -84,7 +99,7 @@
 
         /** @brief  Prepares a statement
          *
-         *  TODO: some error handling here?
+         *  @todo   some error handling here?
          */
         public function Prepare($sql) {
             $this->stmt = $this->conn->prepare($sql);
@@ -92,7 +107,7 @@
 
         /** @brief  Binds a parameter to a statement's placeholder
          *
-         *  TODO: some error handling here?
+         *  @todo   some error handling here?
          */
         public function BindParam($number, $var, $type = PDO::PARAM_STR) {
             $this->stmt->bindValue($number, $var, $type);
@@ -100,7 +115,7 @@
 
         /** @brief  Binds a result column to a variable
          *
-         *  TODO: some error handling here?
+         *  @todo   some error handling here?
          */
         public function BindColumn($number, &$var) {
             $this->stmt->bindColumn($number, $var);
@@ -108,7 +123,7 @@
 
         /** @brief  Executes a prepared statement
          *
-         *  TODO: some error handling here?
+         *  @todo   some error handling here?
          */
         public function StmtExecute() {
             $this->stmt->execute();
@@ -116,7 +131,7 @@
 
         /** @brief  Fetches a row of the results
          *
-         *  TODO: some error handling here?
+         *  @todo   some error handling here?
          */
         public function Fetch($type = PDO::FETCH_BOUND) {
             return $this->stmt->fetch($type);
@@ -129,7 +144,7 @@
          *
          *  Make sure to call this function after a finished statment.
          *
-         *  TODO: some error handling here?
+         *  @todo   some error handling here?
          */
         public function Disconnect() {
             $this->stmt = NULL;
@@ -140,14 +155,14 @@
 
 
     /** @class  DatabasePDOMySQL
-     *  @brief  TODO: insert smart description here!
+     *  @brief  The DatabasePDO implementation for MySQL
      */
     class DatabasePDOMySQL extends DatabasePDO {
 
 
         /** @brief  Performs the connect to a MySQL database using PDO
          *
-         *  TODO: some error handling!
+         *  @todo   some error handling here?
          */
         protected function connect() {
     		$this->conn = new PDO('mysql:host='.$this->host.';dbname='.$this->base, $this->user, $this->pass);

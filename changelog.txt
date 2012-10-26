@@ -1,4 +1,6 @@
 alpha0.2:
+  * Domain objects implemented
+  	* Domains can be created, modified and deleted
   * Database layer implemented
   	* DatabaseInterface and Database class are used by the real engine
 	* the Database engines, i.e. DatabasePDO are another layer of abstraction,

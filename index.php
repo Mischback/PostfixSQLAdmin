@@ -1,7 +1,7 @@
 <?php
 
     /** @file   index.php
-     *  @brief  TODO: insert smart description here!
+     *  @brief  The main document. Handles static pages aswell.
      */
 
 

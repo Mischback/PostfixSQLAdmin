@@ -1,7 +1,10 @@
 <?php
 
     /** @file   Domain.class.php
-     *  @brief  TODO: insert smart description here!
+     *  @brief  Contains the classes that handle Domain objects.
+     *
+     *  This does not only include the Domain object, but the DomainList 
+     *  aswell. See the documentation of these classes for details.
      */
 
 
@@ -11,6 +14,12 @@
 
     /** @class  Domain
      *  @brief  Represents a single Domain to be managed
+     *
+     *  Domains are one of the core elements of the application. User objects 
+     *  are bound to a Domain object.
+     *
+     *  In regard of the mail transport, Domain objects represent the domain
+     *  part of the eMail-address, thus, everything after \@.
      */
     class Domain {
 
@@ -30,6 +39,7 @@
         private $domain_id = NULL;
 
         /** @brief  Returns the domain's ID
+         *  @retval INT $domain_id
          */
         public function getDomainID() {
             return $this->domain_id;
@@ -41,12 +51,15 @@
         private $domain_name = NULL;
 
         /** @brief  Returns the domain's name
+         *  @retval STRING $domain_name
          */
         public function getDomainName() {
             return $this->domain_name;
         }
 
         /** @brief  Sets the domain's name
+         *  @param  STRING $name
+         *  @todo   insert some parsing here!
          */
         public function setDomainName($name) {
 
@@ -61,6 +74,7 @@
         private $domain_user_count = NULL;
 
         /** @brief Returns the domain's user count
+         *  @retval INT $domain_user_count
          */
         public function getUserCount() {
             return $this->domain_user_count;
@@ -68,6 +82,13 @@
 
 
         /** @brief  The constructor
+         *  @param  INT $id
+         *  @param  STRING $name
+         *
+         *  The constructor can handle three different modes:
+         *      - retrieve a Domain by its $id
+         *      - retrieve a Domain by its $name
+         *      - create a new Domain with a given $name
          */
         public function __construct($id = NULL, $name = NULL) {
 
@@ -120,7 +141,7 @@
 
 
     /** @class  DomainList
-     *  @brief  A list of all existing domains
+     *  @brief  A list of all existing domain ids
      */
     class DomainList implements Iterator {
 

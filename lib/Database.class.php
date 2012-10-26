@@ -5,7 +5,11 @@
      */
 
 
+    /** @brief  Constant to check settings from config.inc.php
+     */
     define('SETTING_DATABASE_MYSQL', 'mysql');
+    /** @brief  Constant to check settings from config.inc.php
+     */
     define('SETTING_DATABASE_POSTGRE', 'postgre');
 
 
@@ -15,6 +19,14 @@
 
     /** @class  DatabaseInterface
      *  @brief  The minimum set of functions a database implementation must provide
+     *
+     *  Database requests generally follow this sequence:
+     *      - prepare the statement __Prepare()__
+     *      - bind parameters to the placeholders __BindParam()__
+     *      - execute the statement __StmtExecute()__
+     *      - assign variables to the result columns __BindColumn()__
+     *      - fetch the result's rows __Fetch()__
+     *      - close the connection __Disconnect()__
      */
     interface DatabaseInterface {
 
@@ -36,14 +48,23 @@
         public function BindColumn($number, &$var);
 
         /** @brief  Executes the statement
+         *
+         *  Nothing to say here, just execute the statement.
          */
         public function StmtExecute();
 
         /** @brief  Fetches a single row of the result set
+         *
+         *  Returns __one__ row of the result set. If the result set contains
+         *  more than one line, you have to call this function in a while-loop.
          */
         public function Fetch();
 
         /** @brief  Disconnects
+         *
+         *  Kills the database connection.
+         *
+         *  Please note, that this depends on the real implementation.
          */
         public function Disconnect();
 
@@ -56,6 +77,10 @@
      *  The application will interact with this class. This class doesn't
      *  implement database access, it merely acts as an interface to real
      *  implementations.
+     *
+     *  The real implementation of the DatabaseInterface is fetched into the
+     *  $engine attribute and then all methods are proxied to the real 
+     *  implementation.
      */
     class Database implements DatabaseInterface {
 

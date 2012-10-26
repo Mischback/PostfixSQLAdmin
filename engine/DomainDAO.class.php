@@ -14,11 +14,17 @@
 
     /** @class  DomainDAO
      *  @brief  Handles everything to make Domain objects persistent
+     *
+     *  This class is the way, Domains interact with the database. All means
+     *  of access are concentrated in this class.
+     *
+     *  You can find all necessary SQL-statement in this class aswell.
      */
     class DomainDAO {
 
         /** @brief  Fetches all information about a domain specified by $id
          *  @param  INT $id
+         *  @retval MIXED
          */
         public function getDomainByID($id) {
             return $this->getDomain('SELECT a.domain_id AS id, a.domain_name AS name, COUNT(b.user_id) AS users FROM domains AS a LEFT JOIN users AS b ON (a.domain_id = b.domain_id) WHERE a.domain_id = ? GROUP BY (a.domain_id) LIMIT 1', $id);
@@ -26,6 +32,7 @@
 
         /** @brief  Fetches all information about a domain specified by $name
          *  @param  STRING $name
+         *  @retval MIXED
          */
         public function getDomainByName($name) {
             return $this->getDomain('SELECT a.domain_id AS id, a.domain_name AS name, COUNT(b.user_id) AS users FROM domains AS a LEFT JOIN users AS b ON (a.domain_id = b.domain_id) WHERE a.domain_name = ? GROUP BY (a.domain_id) LIMIT 1', $name);
@@ -34,6 +41,7 @@
         /** @brief  Generic function to retrieve a single domain
          *  @param  STRING $sql The SQL-statement to use
          *  @param  MIXED $param
+         *  @retval MIXED
          */
         private function getDomain($sql, $param) {
 
@@ -74,6 +82,7 @@
 
 
         /** @brief  Fetches all available domain ids
+         *  @retval ARRAY
          */
         public function getDomainList() {
 
@@ -104,6 +113,7 @@
 
 
         /** @brief  Creates a new domain
+         *  @param  STRING $name
          */
         public function createDomain($name) {
 

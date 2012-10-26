@@ -2,6 +2,10 @@
 
     /** @file   domain.php
      *  @brief  Handles all domain related stuff
+     *
+     *  This page is directly called by users. It manages all actions related
+     *  to Domain objects. This includes creation, deletion and modification
+     *  of Domain objects.
      */
 
 
