@@ -25,6 +25,30 @@ a:hover {
     text-decoration:    underline;
 }
 
+/* tables */
+table {
+    border-collapse:    collapse;
+}
+table tr.odd td {
+    background-color:   #ccc;
+}
+table tr.even td {
+    background-color:   #eee;
+}
+
+/* overview tables */
+table.listing {
+    margin: 20px 0 30px 10px;
+    border-bottom:      1px solid #aaa;
+}
+table.listing tr.even td {
+    border-bottom:      1px solid #aaa;
+    border-top:         1px solid #aaa;
+}
+table.listing td.col1 {
+    padding-left:       5px;
+}
+
 
 /* ***** LAYOUT ***** */
 div#layout {
@@ -55,6 +79,10 @@ div#footer div.foot_nav {
     float:              right;
 }
 
+div#layout>div>div#canvas>div>div#content {
+    margin-right:       200px;
+}
+
 
 /* ***** HEADER ***** */
 div#header {
@@ -76,6 +104,14 @@ div#header>div>div>div>div {
 div#header>div>div>div>div img {
     margin:             5px 0 5px 10px;
     border:             none;
+}
+
+
+/* ***** DOMAIN ***** */
+table.domain_list td.col2 {
+    padding:            0 5px 0 15px;
+    text-align:         right;
+    border-right:       1px solid #aaa;
 }
 
 
