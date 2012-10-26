@@ -31,6 +31,36 @@ input {
     border:             1px solid #aaa;
 }
 
+/* button */
+button {
+    border:             none;
+}
+
+button.inline div {
+    height:             18px;
+}
+button.inline>div {
+    background:         url(gfx/button_inline_tile.gif) 0 0 repeat-x;
+}
+button.inline:hover>div {
+    background-position:    0 -18px;
+}
+button.inline>div>div {
+    background:         url(gfx/button_inline_right.gif) 100% 0 no-repeat;
+}
+button.inline:hover>div>div {
+    background-position:    100% -18px;
+}
+button.inline>div>div>div {
+    padding:            0 7px 0 25px;
+    color:              #ddd;
+    font-weight:        bold;
+    background:         0 0 no-repeat;
+}
+button.inline:hover>div>div>div {
+    background-position:    0 -18px;
+}
+
 /* tables */
 table {
     border-collapse:    collapse;
@@ -53,6 +83,23 @@ table.listing tr.even td {
 }
 table.listing td.col1 {
     padding-left:       5px;
+}
+table.listing button.inline {
+    margin:             1px 5px;
+}
+table.listing tr.odd button.inline>div,
+table.listing tr.odd button.inline>div>div>div {
+    background-position:    0 -36px;
+}
+table.listing tr.odd button.inline:hover>div,
+table.listing tr.odd button.inline:hover>div>div>div {
+    background-position:    0 -54px;
+}
+table.listing tr.odd button.inline>div>div {
+    background-position:    100% -36px;
+}
+table.listing tr.odd button.inline:hover>div>div {
+    background-position:    100% -54px;
 }
 
 
@@ -114,14 +161,31 @@ div#header>div>div>div>div img {
 
 
 /* ***** DOMAIN ***** */
+table.domain_list td.col1 {
+    padding-right:      5px;
+    text-align:         left;
+    border-right:       1px solid #aaa;
+}
 table.domain_list td.col2 {
     padding:            0 5px 0 15px;
     text-align:         right;
     border-right:       1px solid #aaa;
 }
+table.domain_list tr.headline td.col1 {
+    text-align:         right;
+}
+table.domain_list td.modify button.inline>div>div>div {
+    background-image:   url(gfx/button_inline_modify.gif);
+}
+table.domain_list td.delete button.inline>div>div>div {
+    background-image:   url(gfx/button_inline_delete.gif);
+}
 
 div#domain_overview div#create_new_domain {
     margin:             5px 0 10px 10px;
+}
+div#domain_overview div#create_new_domain button.inline>div>div>div {
+    background-image:   url(gfx/button_inline_create_domain.gif);
 }
 
 
@@ -145,48 +209,8 @@ div#navigation>a>div {
     margin-top:         5px;
     background:         url(gfx/button_nav_tile.gif) 0 0 repeat-x;
 }
-div#navigation>a:hover>div {
-    background-position:    0 -22px;
-}
-
-div#page_home div#navigation>a.nav_button_home>div,
-div#page_domain div#navigation>a.nav_button_domain>div,
-div#page_user div#navigation>a.nav_button_user>div,
-div#page_alias div#navigation>a.nav_button_alias>div {
-    background-position:    0 -44px;
-}
-div#page_home div#navigation>a.nav_button_home:hover>div,
-div#page_domain div#navigation>a.nav_button_domain:hover>div,
-div#page_user div#navigation>a.nav_button_user:hover>div,
-div#page_alias div#navigation>a.nav_button_alias:hover>div {
-    background-position:    0 -66px;
-}
-
-
 div#navigation>a>div>div {
     background:         url(gfx/button_nav_right.gif) 100% 0 no-repeat;
-}
-div#navigation>a:hover>div>div {
-    background-position:    100% -22px;
-}
-
-div#page_home div#navigation>a.nav_button_home>div>div,
-div#page_domain div#navigation>a.nav_button_domain>div>div,
-div#page_user div#navigation>a.nav_button_user>div>div,
-div#page_alias div#navigation>a.nav_button_alias>div>div {
-    background-position:    100% -44px;
-}
-div#page_home div#navigation>a.nav_button_home:hover>div>div,
-div#page_domain div#navigation>a.nav_button_domain:hover>div>div,
-div#page_user div#navigation>a.nav_button_user:hover>div>div,
-div#page_alias div#navigation>a.nav_button_alias:hover>div>div {
-    background-position:    100% -66px;
-}
-
-
-div#navigation>a>div>div>div>div {
-    padding:            2px 0 0 30px;
-    color:              #ddd;
 }
 
 div#navigation>a.nav_button_home>div>div>div {
@@ -202,18 +226,48 @@ div#navigation>a.nav_button_alias>div>div>div {
     background:         url(gfx/button_nav_alias.gif) 0 0 no-repeat;
 }
 
+div#navigation>a:hover>div,
 div#navigation>a:hover>div>div>div {
     background-position:    0 -22px;
 }
+div#navigation>a:hover>div>div {
+    background-position:    100% -22px;
+}
+div#page_home div#navigation>a.nav_button_home>div,
+div#page_domain div#navigation>a.nav_button_domain>div,
+div#page_user div#navigation>a.nav_button_user>div,
+div#page_alias div#navigation>a.nav_button_alias>div,
 div#page_home div#navigation>a.nav_button_home>div>div>div,
 div#page_domain div#navigation>a.nav_button_domain>div>div>div,
 div#page_user div#navigation>a.nav_button_user>div>div>div,
 div#page_alias div#navigation>a.nav_button_alias>div>div>div {
     background-position:    0 -44px;
 }
+div#page_home div#navigation>a.nav_button_home>div>div,
+div#page_domain div#navigation>a.nav_button_domain>div>div,
+div#page_user div#navigation>a.nav_button_user>div>div,
+div#page_alias div#navigation>a.nav_button_alias>div>div {
+    background-position:    100% -44px;
+}
+div#page_home div#navigation>a.nav_button_home:hover>div,
+div#page_domain div#navigation>a.nav_button_domain:hover>div,
+div#page_user div#navigation>a.nav_button_user:hover>div,
+div#page_alias div#navigation>a.nav_button_alias:hover>div,
 div#page_home div#navigation>a.nav_button_home:hover>div>div>div,
 div#page_domain div#navigation>a.nav_button_domain:hover>div>div>div,
 div#page_user div#navigation>a.nav_button_user:hover>div>div>div,
 div#page_alias div#navigation>a.nav_button_alias:hover>div>div>div {
     background-position:    0 -66px;
 }
+div#page_home div#navigation>a.nav_button_home:hover>div>div,
+div#page_domain div#navigation>a.nav_button_domain:hover>div>div,
+div#page_user div#navigation>a.nav_button_user:hover>div>div,
+div#page_alias div#navigation>a.nav_button_alias:hover>div>div {
+    background-position:    100% -66px;
+}
+
+div#navigation>a>div>div>div>div {
+    padding:            2px 0 0 30px;
+    color:              #ddd;
+}
+
