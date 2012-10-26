@@ -25,14 +25,37 @@
          *
          *  Make sure to call Disconnect after you completed a request, to free
          *  the $stmt variable.
-         *
-         *  __Why is the getInstance() function not here?__
-         *
-         *  The instance must be a real implementation of the DatabasePDO class
-         *  and therefore the getInstance() is in the concrete implementation 
-         *  below.
          */
-        protected static $instanceList = NULL;
+        private static $instanceList = NULL;
+
+        /** @brief  Returns a instance of this class
+         *
+         *  It will reuse existing database connections or create new 
+         *  connection, if there is no reusable connection.
+         */
+        public static function getInstance() {
+
+            $className = get_called_class();
+
+            /* there is no instance created yet */
+            if ( self::$instanceList === NULL ) {
+                self::$instanceList = array();
+                self::$instanceList[] = new $className();
+                return self::$instanceList[0];
+            }
+
+            /* look for a reusable instance */
+            foreach ( self::$instanceList as $k => $v ) {
+                if ( $v->stmt === NULL ) {
+                    return $v;
+                }
+            }
+
+            /* create a new instance */
+            self::$instanceList[$k+1] = new $className();
+            return self::$instanceList[$k+1];
+        }
+
 
         /** @brief  The connection of this instance
          */
@@ -40,14 +63,15 @@
 
         /** @brief  The statement to be processed currently.
          */
-        protected $stmt = NULL;
+        private $stmt = NULL;
+
 
         /** @brief  The constructor
          *
          *  No magic here, because it merely prepares the establishing of a
          *  connection, but doesn't perform the real connect.
          */
-        protected function __construct() {
+        private function __construct() {
             
             $this->host = CFG_DATABASE_HOST;
             $this->user = CFG_DATABASE_USER;
@@ -120,31 +144,6 @@
      */
     class DatabasePDOMySQL extends DatabasePDO {
 
-        /** @brief  Returns a instance of this class
-         *
-         *  It will reuse existing database connections or create new 
-         *  connection, if there is no reusable connection.
-         */
-        public static function getInstance() {
-
-            /* there is no instance created yet */
-            if ( self::$instanceList === NULL ) {
-                self::$instanceList = array();
-                self::$instanceList[] = new self();
-                return self::$instanceList[0];
-            }
-
-            /* look for a reusable instance */
-            foreach ( self::$instanceList as $k => $v ) {
-                if ( $v->stmt === NULL ) {
-                    return $v;
-                }
-            }
-
-            /* create a new instance */
-            self::$instanceList[$k+1] = new self();
-            return self::$instanceList[$k+1];
-        }
 
         /** @brief  Performs the connect to a MySQL database using PDO
          *
