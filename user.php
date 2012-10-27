@@ -9,8 +9,9 @@
     require_once('./lib/basic.php');
 
 
-    /* we'll need the Domain object */
+    /* Gentlemen, start your engines! */
     require_once('./engine/User.class.php');
+    require_once('./engine/Domain.class.php');
 
 
     /* list users
@@ -33,6 +34,15 @@
         );
     }
 
+    $dd_dom_list = array();
+    foreach( new DomainList() as $dom ) {
+        $dd_dom_list[] = array(
+            'id'    => $dom->getDomainID(),
+            'name'  => $dom->getDomainName(),
+        );
+    }
+
     $frontend->assign('USER_LIST', $user_list);
+    $frontend->assign('DROPDOWN_DOMAIN_LIST', $dd_dom_list);
     $frontend->display('user_overview.tpl');
 ?>

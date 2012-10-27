@@ -5,7 +5,7 @@
 
 {block name="user_content"}
 <div id="user_overview">
-    <h3>Address overview</h3>
+    <h3>Address Overview</h3>
 
     <table class="listing user_list" summary="lists users">
         <tr class="headline {cycle name="listing_row" values="odd,even"}">
@@ -29,5 +29,8 @@
         </tr>
 {/section}
     </table>
+
+    <h3>Create New Address</h3>
+{include file="user_form_create.tpl"}
 </div>
 {/block}
