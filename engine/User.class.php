@@ -6,7 +6,7 @@
 
 
     /* fetch the DAO */
-    require_once('./engine/DomainDAO.class.php');
+    require_once('./engine/UserDAO.class.php');
 
 
     /** @class  User
@@ -75,6 +75,26 @@
          */
         public function getUserMail() {
             return $this->username.'@'.$this->domain_name;
+        }
+
+
+        /** @brief  The constructor
+         */
+        public function __construct($id = NULL) {
+
+            $dao = new UserDAO();
+
+            if ( isset($id) ) {
+                $tmp_data = $dao->getUserByID($id);
+            }
+
+            /* fill the object */
+            if ( $tmp_data ) {
+                $this->user_id = $tmp_data['user_id'];
+                $this->username = $tmp_data['username'];
+                $this->domain_id = $tmp_data['domain_id'];
+                $this->domain_name = $tmp_data['domain_name'];
+            }
         }
     }
 
