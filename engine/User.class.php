@@ -98,4 +98,55 @@
         }
     }
 
+
+    /** @class  UserList
+     *  @brief  A list of user ids
+     */
+    class UserList implements Iterator {
+
+        /** @brief  The constructor
+         */
+        public function __construct($domain = NULL) {
+
+            $this->pos = 0;
+
+            $dao = new UserDAO();
+
+            foreach( $dao->getUserList($domain) as $tmp_id ) {
+                $tmp_user = new User($tmp_id);
+
+                if ( $tmp_user->getUserID() == $tmp_id ) {
+                    $this->list[] = $tmp_user;
+                }
+            }
+        }
+
+
+        /*
+         * The following stuff is required for the iterator interface
+         */
+        private $pos = 0;
+        private $list = array();
+
+        public function rewind() {
+            $this->pos = 0;
+        }
+
+        public function current() {
+            return $this->list[$this->pos];
+        }
+
+        public function key() {
+            return $this->pos;
+        }
+
+        public function next() {
+            ++$this->pos;
+        }
+
+        public function valid() {
+            return isset($this->list[$this->pos]);
+        }
+    }
+
 ?>

@@ -61,6 +61,48 @@
                 return false;
             }
         }
+
+
+        /** @brief  Fetches all availabe user ids of a given domain
+         *  @param  INT $domain
+         *  @retval ARRAY
+         */
+        public function getUserList($domain) {
+
+            $result = array();
+
+            /* connect to the database */
+            $db = new Database();
+
+            /* prepare the statment */
+            $sql = 'SELECT a.user_id FROM users AS a, domains AS b WHERE a.domain_id = b.domain_id';
+            if ( $domain !== NULL ) {
+                $sql .= ' WHERE domain_id = ?';
+            }
+            $sql .= ' ORDER BY b.domain_name';
+            $db->Prepare($sql);
+
+            /* bind the parameter */
+            if ( $domain !== NULL ) {
+                $db->BindParam(1, $domain);
+            }
+
+            /* execute the statement */
+            $db->StmtExecute();
+
+            /* bind variables to the result columns */
+            $db->BindColumn(1, $tmp_id);
+
+            /* fetch the results */
+            while ( $db->Fetch() ) {
+                $result[] = $tmp_id;
+            }
+
+            /* terminate the connection */
+            $db->Disconnect();
+
+            return $result;
+        }
     }
 
 ?>
