@@ -80,15 +80,23 @@
 
         /** @brief  The constructor
          */
-        public function __construct($id = NULL, $username = NULL, $domain_id = NULL, $mail = NULL) {
+        public function __construct($id = NULL, $username = NULL, $domain_id = NULL, $password = NULL, $mail = NULL) {
 
             $dao = new UserDAO();
 
             if ( isset($id) ) {
                 $tmp_data = $dao->getUserByID($id);
             }
-            elseif ( isset($username) && isset($domain_id) ) {
+            elseif ( isset($username) && isset($domain_id) && !isset($password) ) {
                 $tmp_data = $dao->getUserByNameAndDomainID($username, $domain_id);
+            }
+            elseif ( isset($username) && isset($domain_id) && isset($password) ) {
+                $tmp_data = $dao->getUserByNameDomainIDAndPassword($username, $domain_id, $password);
+
+                if ( !$tmp_data ) {
+                    $dao->createUser($username, $domain_id, $password);
+                    $tmp_data = $dao->getUserByNameDomainIDAndPassword($username, $domain_id, $password);
+                }
             }
 
             /* fill the object */

@@ -31,6 +31,16 @@
             return $this->getUser('a.username = ? AND a.domain_id = ?', array($username, $domain_id));
         }
 
+        /** @brief  Fetches all information about a user by $username, $domain_id and $password
+         *  @param  STRING $username
+         *  @param  INT $domain_id
+         *  @param  STRING $password
+         *  @retval MIXED
+         */
+        public function getUserByNameDomainIDAndPassword($username, $domain_id, $password) {
+            return $this->getUser('a.username = ? AND a.domain_id = ? AND a.password = MD5(?)', array($username, $domain_id, $password));
+        }
+
         /** @brief  Fetches all information about a user specified by $mail
          *  @param  STRING $mail
          *  @retval MIXED
@@ -146,6 +156,32 @@
             $db->Disconnect();
 
             return $result;
+        }
+
+
+        /** @brief  Creates a new user
+         *  @param  STRING $username
+         *  @param  INT $domain_id
+         *  @param  STRING $password
+         */
+        public function createUser($username, $domain_id, $password) {
+
+            /* connect to the database */
+            $db = new Database();
+
+            /* prepare the statment */
+            $db->Prepare('INSERT INTO users VALUES (NULL, ?, ?, MD5(?))');
+
+            /* bind the parameter */
+            $db->BindParam(1, $domain_id);
+            $db->BindParam(2, $username);
+            $db->BindParam(3, $password);
+
+            /* execute the statement */
+            $db->StmtExecute();
+
+            /* terminate the connection */
+            $db->Disconnect();
         }
     }
 

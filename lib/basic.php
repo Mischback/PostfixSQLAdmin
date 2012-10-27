@@ -10,6 +10,10 @@
      */
 
 
+    /* we'll need the session */
+    session_start();
+
+
     /* we'll need a FrontEnd */
     require_once('./engine/FrontEnd.class.php');
     $frontend = new FrontEnd();

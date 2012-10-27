@@ -25,11 +25,13 @@
 
     /* step 01 */
     if ( isset($_POST['create_user_username']) && ($_POST['create_user_username'] != '')
-        && isset($_POST['create_user_domain']) && ($_POST['create_user_domain'] != '') ) {
+        && isset($_POST['create_user_domain']) && ($_POST['create_user_domain'] != '')
+        && !isset($_POST['user_password']) ) {
 
         if ( $_POST['create_user_domain'] === 'NULL') {
             /* no domain selected */
             // TODO: insert smart error handling here!
+            die('No domain given!');
         }
 
         $tmp_user = new User(NULL, $_POST['create_user_username'], $_POST['create_user_domain']);
@@ -38,12 +40,37 @@
             && $tmp_user->getDomainID() == $_POST['create_user_domain'] ) {
             /* user already exists! */
             // TODO: insert smart error handling here!
-        } else {
-            $frontend->assign('CREATE_USERNAME', $_POST['create_user_username']);
-            $frontend->assign('CREATE_DOMAIN_ID', $_POST['create_user_domain']);
-            $frontend->display('user_create_password.tpl');
-            die;
+            die('User already exists');
         }
+
+        /* we store the necessary information in the session
+         * This data is already validated and checked for plausibility.
+         * We will use this to verify the information in step 02
+         */
+        $_SESSION['create_user'] = array(
+            'username'  => $_POST['create_user_username'],
+            'domain_id' => $_POST['create_user_domain'],
+        );
+
+        $frontend->assign('CREATE_USERNAME', $_POST['create_user_username']);
+        $frontend->assign('CREATE_DOMAIN_ID', $_POST['create_user_domain']);
+        $frontend->display('user_create_password.tpl');
+
+        die;
+    }
+
+    /* step 02 */
+    if ( isset($_POST['create_user_username']) && ($_POST['create_user_username'] != '')
+        && isset($_POST['create_user_domain']) && ($_POST['create_user_domain'] != '')
+        && isset($_POST['user_password']) && ($_POST['user_password'] != '') ) {
+
+        if ( $_POST['create_user_username'] != $_SESSION['create_user']['username']
+            || $_POST['create_user_domain'] != $_SESSION['create_user']['domain_id']) {
+            /* SECURITY BREAK: POST don't match SESSION */
+            die('SECURITY BREAKING DETECTED!');
+        }
+
+        $tmp_user = new User(NULL, $_POST['create_user_username'], $_POST['create_user_domain'], $_POST['user_password']);
     }
 
 
