@@ -1,87 +1,63 @@
--- phpMyAdmin SQL Dump
--- version 3.5.2.2
--- http://www.phpmyadmin.net
---
--- Host: localhost
--- Erstellungszeit: 01. Okt 2012 um 22:36
--- Server Version: 5.1.63-0+squeeze1
--- PHP-Version: 5.3.3-7+squeeze14
 
-SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-
---
--- Datenbank: `postfix`
---
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `aliases`
---
-
-DROP TABLE IF EXISTS `aliases`;
-CREATE TABLE IF NOT EXISTS `aliases` (
-  `alias_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Just a unique ID.',
-  `domain_id` int(10) unsigned NOT NULL,
-  `source` varchar(255) COLLATE latin1_german2_ci NOT NULL,
-  `destination` varchar(255) COLLATE latin1_german2_ci NOT NULL,
-  PRIMARY KEY (`alias_id`),
-  KEY `alias_domain` (`domain_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_german2_ci AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `domains`
---
-
+-- structure for domains
+-- This table stores all hosted domains
 DROP TABLE IF EXISTS `domains`;
 CREATE TABLE IF NOT EXISTS `domains` (
-  `domain_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Just the unique ID.',
-  `domain_name` varchar(100) COLLATE latin1_german2_ci NOT NULL,
-  PRIMARY KEY (`domain_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_german2_ci COMMENT='Contains the virtual domains that are hosted.' AUTO_INCREMENT=1 ;
+  `domain_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'just a unique ID',
+  `domain_name` varchar(255) NOT NULL COMMENT 'the domain',
+  PRIMARY KEY (`domain_id`),
+  UNIQUE KEY `domain_name` (`domain_name`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Stores the virtual domains that are hosted' AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
 
+-- structure of users
+-- This table stores all user accounts
+-- 
+-- A user account is defined by its username and the assigned domain (see the
+-- unique key constraint 'email').
 --
--- Tabellenstruktur für Tabelle `users`
---
-
+-- The real email-address is constructed by the username (local part of the 
+-- address) and the domain_name (fetched from 'domains', domain part of the
+-- mail address).
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
-  `user_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Just a unique ID.',
+  `user_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'just a unique ID',
   `domain_id` int(10) unsigned NOT NULL COMMENT 'FK to ''domains''',
-  `email` varchar(255) COLLATE latin1_german2_ci NOT NULL,
-  `password` char(32) COLLATE latin1_german2_ci NOT NULL,
+  `username` varchar(255) NOT NULL COMMENT 'the local-part of the mail address',
+  `password` char(32) NOT NULL COMMENT 'the user''s password hash',
   PRIMARY KEY (`user_id`),
-  UNIQUE KEY `email` (`email`),
-  KEY `domain` (`domain_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_german2_ci COMMENT='Contains the information about a user.' AUTO_INCREMENT=1 ;
+  UNIQUE KEY `email` (`username`,`domain_id`),
+  KEY `users_domain` (`domain_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Stores the user information' AUTO_INCREMENT=1 ;
 
---
--- Constraints der exportierten Tabellen
---
 
---
--- Constraints der Tabelle `aliases`
---
+-- structure of aliases
+-- This table stores aliases
+-- 
+-- An alias is a special email address, which will be forwarded to a certain
+-- destination mail address.
+-- 
+-- The 'aliasname' corresponds to the 'username' of the 'users'-table. The 
+-- complete alias is constructed by the aliasname (local part of the address)
+-- and the domain_name (fetched from 'domains', domain part of the address).
+DROP TABLE IF EXISTS `aliases`;
+CREATE TABLE IF NOT EXISTS `aliases` (
+  `alias_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'just a unique ID',
+  `domain_id` int(10) unsigned NOT NULL COMMENT 'FK to table ''domains''',
+  `aliasname` varchar(255) NOT NULL COMMENT 'local-part of an alias',
+  `destination` varchar(255) NOT NULL COMMENT 'the destination eMail address',
+  PRIMARY KEY (`alias_id`),
+  UNIQUE KEY `aliasname` (`aliasname`,`domain_id`),
+  KEY `alias_domain` (`domain_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Stores the aliases' AUTO_INCREMENT=1 ;
+
+
+-- Adds a foreign key constraint to 'aliases' to assure correct domain_ids
 ALTER TABLE `aliases`
   ADD CONSTRAINT `alias_domain` FOREIGN KEY (`domain_id`) REFERENCES `domains` (`domain_id`) ON DELETE CASCADE;
 
---
--- Constraints der Tabelle `users`
---
-ALTER TABLE `users`
-  ADD CONSTRAINT `domain` FOREIGN KEY (`domain_id`) REFERENCES `domains` (`domain_id`) ON DELETE CASCADE;
 
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+-- Adds a foreign key constraint to 'users' to assure correct domain _ids
+ALTER TABLE `users`
+  ADD CONSTRAINT `users_domain` FOREIGN KEY (`domain_id`) REFERENCES `domains` (`domain_id`) ON DELETE CASCADE;
+
