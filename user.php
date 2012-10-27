@@ -16,7 +16,6 @@
 
     /* MAGIC STARTS HERE! */
 
-
     /* CREATE new user
      * Creation is splitted in two steps:
      *      01: specify the username and the domain
@@ -71,6 +70,9 @@
         }
 
         $tmp_user = new User(NULL, $_POST['create_user_username'], $_POST['create_user_domain'], $_POST['user_password']);
+
+        /* get rid of the session backup */
+        $_SESSION['create_user'] = NULL;
     }
 
 
