@@ -19,7 +19,42 @@
          *  @retval MIXED
          */
         public function getUserByID($id) {
+            return $this->getUser('a.user_id = ?', $id);
+        }
 
+        /** @brief  Fetches all information about a user specified by $username and $domain_id
+         *  @param  STRING $username
+         *  @param  INT $domain_id
+         *  @retval MIXED
+         */
+        public function getUserByNameAndDomainID($username, $domain_id) {
+            return $this->getUser('a.username = ? AND a.domain_id = ?', array($username, $domain_id));
+        }
+
+        /** @brief  Fetches all information about a user specified by $mail
+         *  @param  STRING $mail
+         *  @retval MIXED
+         *
+         *  We assume, that $mail is a valid mail address and we will simply 
+         *  split it at the '@' character.
+         */
+        public function getUserByMail($mail) {
+
+            $tmp = explode('@', $mail);
+            if ( count($tmp) != 2 ) {
+                return false;
+            }
+
+            return $this->getUser('a.username = ? AND b.domain_name = ?', $tmp);
+        }
+
+        /** @brief  Generic function to retrieve a single user
+         *  @param  STRING $where The part of the where-clause that matters
+         *  @param  MIXED  $param
+         *  @reval  MIXED
+         */
+        private function getUser($where, $param) {
+        
             $tmp_user_id = NULL;
             $tmp_domain_id = NULL;
             $tmp_username = NULL;
@@ -29,10 +64,19 @@
             $db = new Database();
 
             /* prepare the statment */
-            $db->Prepare('SELECT a.user_id AS user_id, a.domain_id AS domain_id, a.username AS username, b.domain_name AS domain_name FROM users AS a, domains AS b WHERE a.domain_id = b.domain_id AND a.user_id = ? LIMIT 1');
+            $sql = 'SELECT a.user_id AS user_id, a.domain_id AS domain_id, a.username AS username, b.domain_name AS domain_name FROM users AS a, domains AS b WHERE a.domain_id = b.domain_id AND ';
+            $sql .= $where;
+            $sql .= ' LIMIT 1';
+            $db->Prepare($sql);
 
             /* bind the parameter */
-            $db->BindParam(1, $id);
+            if ( is_array($param) ) {
+                for ( $i = 0; $i < count($param); $i++ ) {
+                    $db->BindParam($i+1, $param[$i]);
+                }
+            } else {
+                $db->BindParam(1, $param);
+            }
 
             /* execute the statement */
             $db->StmtExecute();

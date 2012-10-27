@@ -80,12 +80,15 @@
 
         /** @brief  The constructor
          */
-        public function __construct($id = NULL) {
+        public function __construct($id = NULL, $username = NULL, $domain_id = NULL, $mail = NULL) {
 
             $dao = new UserDAO();
 
             if ( isset($id) ) {
                 $tmp_data = $dao->getUserByID($id);
+            }
+            elseif ( isset($username) && isset($domain_id) ) {
+                $tmp_data = $dao->getUserByNameAndDomainID($username, $domain_id);
             }
 
             /* fill the object */

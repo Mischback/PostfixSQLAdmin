@@ -14,6 +14,39 @@
     require_once('./engine/Domain.class.php');
 
 
+    /* MAGIC STARTS HERE! */
+
+
+    /* CREATE new user
+     * Creation is splitted in two steps:
+     *      01: specify the username and the domain
+     *      02: create the new user with his password
+     */
+
+    /* step 01 */
+    if ( isset($_POST['create_user_username']) && ($_POST['create_user_username'] != '')
+        && isset($_POST['create_user_domain']) && ($_POST['create_user_domain'] != '') ) {
+
+        if ( $_POST['create_user_domain'] === 'NULL') {
+            /* no domain selected */
+            // TODO: insert smart error handling here!
+        }
+
+        $tmp_user = new User(NULL, $_POST['create_user_username'], $_POST['create_user_domain']);
+
+        if ( $tmp_user->getUserName() == $_POST['create_user_username']
+            && $tmp_user->getDomainID() == $_POST['create_user_domain'] ) {
+            /* user already exists! */
+            // TODO: insert smart error handling here!
+        } else {
+            $frontend->assign('CREATE_USERNAME', $_POST['create_user_username']);
+            $frontend->assign('CREATE_DOMAIN_ID', $_POST['create_user_domain']);
+            $frontend->display('user_create_password.tpl');
+            die;
+        }
+    }
+
+
     /* list users
      *
      */
