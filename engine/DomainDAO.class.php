@@ -9,9 +9,6 @@
     require_once('./lib/Database.class.php');
 
 
-    /* define the necessary statements */
-
-
     /** @class  DomainDAO
      *  @brief  Handles everything to make Domain objects persistent
      *

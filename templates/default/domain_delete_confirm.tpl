@@ -2,6 +2,7 @@
     domain_delete_confirm.tpl
 *}
 {extends file="layout.tpl"}
+{block name="page_title"}Domains{/block}
 
 {block name="layout_canvas"}
 <div id="page_domain">
