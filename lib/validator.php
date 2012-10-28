@@ -46,4 +46,20 @@
         return $address;
     }
 
+
+    /** @brief  Checks the domain part of an email-address
+     *  @param  STRING $domain The domain to check
+     *  @retval MIXED The result of the check
+     */
+    function checkDomain($domain) {
+
+        /* remove unnecessary whitespaces
+         * removes ' ', '\t', '\n', '\r', '\0', '\x0B'
+         * see: http://php.net/manual/en/function.trim.php
+         */
+        $domain = strtolower(trim($domain));
+
+        return $domain;
+    }
+
 ?>
