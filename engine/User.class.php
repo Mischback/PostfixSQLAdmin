@@ -158,7 +158,7 @@
                     $parsed_name = checkLocalAddress($username);
                     if ( $parsed == 0 ) {
                         // TODO: insert smart error handling here!
-                        die('__construct() - mode createUser(): $username does not match mail-regex')
+                        die('__construct() - mode createUser(): $username does not match mail-regex');
                     }
 
                     $dao->createUser($parsed_name, $domain_id, $password);
