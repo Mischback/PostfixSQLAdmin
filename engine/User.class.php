@@ -8,6 +8,9 @@
     /* fetch the DAO */
     require_once('./engine/UserDAO.class.php');
 
+    /* fetch the validator */
+    require_once('./lib/validator.php');
+
 
     /** @class  User
      *  @brief  Represents a single User to be managed
@@ -40,8 +43,6 @@
         /** @brief  The user's name
          *
          *  This is also the local-part of the mail-address.
-         *
-         *  @todo: Check this against some RegEx to validate this!    
          */
         private $username = NULL;
 
@@ -55,11 +56,18 @@
         /** @brief  Sets the user's name
          *  @param  STRING $name
          *
-         *  @todo: Check this against some RegEx to validate this!    
+         *  @todo: Error handling if illegal local-part is given!
          */
         public function setUserName($name) {
-            // TODO: Check this to validate the username
-            $this->username = $name;
+
+            $parsed = checkLocalAddress($name);
+
+            if ( $parsed == 0 ) {
+                // TODO: insert some smart error handling here!
+                die('setUserName(): $name does not match mail-regex!');
+            }
+
+            $this->username = $parsed;
             $this->modified = true;
         }
 
@@ -141,7 +149,19 @@
                 $tmp_data = $dao->getUserByNameDomainIDAndPassword($username, $domain_id, $password);
 
                 if ( !$tmp_data ) {
-                    $dao->createUser($username, $domain_id, $password);
+                    /* here we create new users!
+                     * Make sure to check the username against our RegEx. No
+                     * need to check the $domain_id, because the FK constraint
+                     * of the database will only allow valid numbers here.
+                     */
+
+                    $parsed_name = checkLocalAddress($username);
+                    if ( $parsed == 0 ) {
+                        // TODO: insert smart error handling here!
+                        die('__construct() - mode createUser(): $username does not match mail-regex')
+                    }
+
+                    $dao->createUser($parsed_name, $domain_id, $password);
                     $tmp_data = $dao->getUserByNameDomainIDAndPassword($username, $domain_id, $password);
                 }
             }
