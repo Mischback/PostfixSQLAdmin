@@ -62,7 +62,7 @@
 
             $parsed = checkLocalAddress($name);
 
-            if ( $parsed == 0 ) {
+            if ( $parsed === false ) {
                 // TODO: insert some smart error handling here!
                 die('setUserName(): $name does not match mail-regex!');
             }
@@ -156,7 +156,7 @@
                      */
 
                     $parsed_name = checkLocalAddress($username);
-                    if ( $parsed == 0 ) {
+                    if ( $parsed === false ) {
                         // TODO: insert smart error handling here!
                         die('__construct() - mode createUser(): $username does not match mail-regex');
                     }

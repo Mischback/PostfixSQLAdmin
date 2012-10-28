@@ -5,7 +5,10 @@
      */
 
 
-    define('VALIDATOR_ALLOWED_CHAR_LOCAL', "[a-z0-9!#$%&'*+/=?^_`{|}~-]");
+    /* RFC5322 defines a character set to be used in atoms
+     * see: http://tools.ietf.org/html/rfc5322#section-3.2.3
+     */
+    define('VALIDATOR_DOT_ATOM_CHAR', "[a-z0-9!#$%&'*+-/=?^_`{|}~]");
 
     /** @brief  Checks the local part of an email-address
      *  @param  STRING $address The address to check
@@ -24,16 +27,17 @@
          */
         $address = strtolower(trim($address));
 
-        /* now check, if $address confirms to the specification of RFC2822
-         * see: http://tools.ietf.org/html/rfc2822#section-3.4.1
+        /* now check, if $address conforms to the specification of RFC5322
+         * see: http://tools.ietf.org/html/rfc5322#section-3.4.1
+         * see: http://tools.ietf.org/html/rfc5322#section-3.2.3
          *
-         * However, we will not implement the full RFC2822! We will go with
+         * However, we will not implement the full RFC! We will go with
          * what the RFC calls 'dot-atom', which means a string of 
          * ASCII-characters and the '.' surrounded by ASCII.
          *
          * see: http://www.regular-expressions.info/email.html
          */
-        $regex = '@^'.VALIDATOR_ALLOWED_CHAR_LOCAL.'+(?:\.'.VALIDATOR_ALLOWED_CHAR_LOCAL.'+)*$@';
+        $regex = '@^'.VALIDATOR_DOT_ATOM_CHAR.'+(?:\.'.VALIDATOR_DOT_ATOM_CHAR.'+)*$@';
 
         if ( preg_match($regex, $address) == 0 ) {
             return false;
