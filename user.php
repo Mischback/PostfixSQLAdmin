@@ -79,7 +79,7 @@
 
     /* DELETE existing user
      * Deletion is splitted in two steps
-     *      01: select the domain to be deleted
+     *      01: select the user to be deleted
      *      02: confirm deletion
      */
 
@@ -123,7 +123,7 @@
 
     /* MODIFY existing user
      * Modification is splitted in two steps
-     *      01: select the domain to be deleted
+     *      01: select the user to be modified
      *      02: make the changes
      */
 
@@ -161,7 +161,6 @@
         }
     }
 
-
     /* step 02 */
     if ( isset($_POST['modify_user_id']) && ($_POST['modify_user_id'] != '')
         && isset($_POST['modify_user_name']) && ($_POST['modify_user_name'] != '')
@@ -177,6 +176,48 @@
         $tmp_user->setUserName($_POST['modify_user_name']);
         $tmp_user->setDomainID($_POST['modify_user_domain']);
         $tmp_user = NULL;
+    }
+
+
+    /* RESET PASSWORDS
+     * Resetting is splitted in two steps:
+     *      01: Select the account to reset the password
+     *      02: Assign new password
+     */
+
+    /* step 01 */
+    if ( isset($_POST['resetpassword_id']) && ($_POST['resetpassword_id'] != '')
+        && !isset($_POST['resetpassword_password']) ) {
+
+        /* validation */
+        $tmp_user = new User($_POST['resetpassword_id']);
+
+        if ( $tmp_user->getUserID() != $_POST['resetpassword_id'] ) {
+            /* invalid */
+            // TODO: insert smart error handling here!
+            die('Invalid user ID!');
+        }
+
+        /* we store the necessary information in the session */
+        $_SESSION['resetpassword'] = $_POST['resetpassword_id'];
+
+        $frontend->assign('RESETPASSWORD_ID', $_POST['resetpassword_id']);
+        $frontend->assign('RESETPASSWORD_NAME', $tmp_user->getUserMail());
+        $frontend->display('user_resetpassword.tpl');
+        die;
+    }
+
+    /* step 02 */
+    if ( isset($_POST['resetpassword_id']) && ($_POST['resetpassword_id'] != '') && isset($_POST['resetpassword_password']) && ($_POST['resetpassword_password'] != '') ) {
+
+        if ( $_POST['resetpassword_id'] != $_SESSION['resetpassword']) {
+            die('SECURITY BREAKING DETECTED!');
+        }
+
+        $tmp_user = new User($_POST['resetpassword_id']);
+        $tmp_user->setPassword($_POST['resetpassword_password']);
+
+        $_SESSION['resetpassword'] = NULL;
     }
 
 

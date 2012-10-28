@@ -14,6 +14,7 @@
             <td class="col3"><img src="./templates/default/gfx/icon_world.gif" title="the name of the domain" /></td>
             <td class="col4"></td>
             <td class="col5"></td>
+            <td class="col6"></td>
         </tr>
 {section name="row" loop=$USER_LIST}
         <tr class="{cycle name="listing_row" values="odd,even"}">
@@ -23,7 +24,10 @@
             <td class="col4 modify">
 {include file="user_form_modify.tpl" USER_ID=$USER_LIST[row].user_id}
             </td>
-            <td class="col5 delete">
+            <td class="col5 resetpassword">
+{include file="user_form_resetpassword.tpl" USER_ID=$USER_LIST[row].user_id}
+            </td>
+            <td class="col6 delete">
 {include file="user_form_delete.tpl" USER_ID=$USER_LIST[row].user_id}
             </td>
         </tr>

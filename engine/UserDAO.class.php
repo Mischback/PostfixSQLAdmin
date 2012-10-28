@@ -231,6 +231,30 @@
             /* terminate the connection */
             $db->Disconnect();
         }
+
+
+        /** @brief  Updates a user's password
+         *  @param  INT $id
+         *  @param  STRING $password
+         */
+        public function setPasswordByID($id, $password) {
+        
+            /* connect to the database */
+            $db = new Database();
+
+            /* prepare the statment */
+            $db->Prepare('UPDATE users SET password = MD5(?) WHERE user_id = ? LIMIT 1');
+
+            /* bind the parameter */
+            $db->BindParam(1, $password);
+            $db->BindParam(2, $id);
+
+            /* execute the statement */
+            $db->StmtExecute();
+
+            /* terminate the connection */
+            $db->Disconnect();
+        }
     }
 
 ?>

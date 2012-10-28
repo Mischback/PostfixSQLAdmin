@@ -163,6 +163,16 @@
             $dao = new UserDAO();
             $dao->deleteUserByID($this->user_id);
         }
+
+
+        /** @brief  Sets the user's password
+         *  @param  STRING $password
+         */
+        public function setPassword($password) {
+            
+            $dao = new UserDAO();
+            $dao->setPasswordByID($this->user_id, $password);
+        }
     }
 
 
