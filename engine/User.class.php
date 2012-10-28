@@ -14,6 +14,17 @@
      */
     class User {
 
+        /** @brief  This variable controls, if a database update is neccessary
+         *
+         *  For the User class, this is only the case, if the functions
+         *  setUserName and setDomainID() are used.
+         *
+         *  The acutal update to the DB will happen on object destruction. See
+         *  __destruct() for further details.
+         */
+        private $modified = false;
+
+
         /** @brief  The user's ID
          */
         private $user_id = NULL;
@@ -41,6 +52,17 @@
             return $this->username;
         }
 
+        /** @brief  Sets the user's name
+         *  @param  STRING $name
+         *
+         *  @todo: Check this against some RegEx to validate this!    
+         */
+        public function setUserName($name) {
+            // TODO: Check this to validate the username
+            $this->username = $name;
+            $this->modified = true;
+        }
+
 
         /** @brief  The user's domain ID
          *  
@@ -53,6 +75,14 @@
          */
         public function getDomainID() {
             return $this->domain_id;
+        }
+
+        /** @brief  Sets the user's domain ID
+         *  @param  INT $domain
+         */
+        public function setDomainID($domain) {
+            $this->domain_id = $domain;
+            $this->modified = true;
         }
 
 
@@ -105,6 +135,23 @@
                 $this->username = $tmp_data['username'];
                 $this->domain_id = $tmp_data['domain_id'];
                 $this->domain_name = $tmp_data['domain_name'];
+            }
+        }
+
+
+        /** @brief  The destructor
+         *
+         *  This function is called, when the object is destructed. In PHP
+         *  objects get destructed, if all references to the object are deleted.
+         *
+         *  If the object has been changed in its lifecycle, this will perform
+         *  an update of the database tables.
+         */
+        public function __destruct() {
+            
+            if ( $this->modified ) {
+                $dao = new UserDAO();
+                $dao->updateUser($this->user_id, $this->username, $this->domain_id);
             }
         }
 

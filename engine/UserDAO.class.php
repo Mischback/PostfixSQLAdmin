@@ -205,6 +205,32 @@
             /* terminate the connection */
             $db->Disconnect();
         }
+
+
+        /** @brief  Updates an existing user
+         *  @param  INT $id
+         *  @param  STRING $name
+         *  @param  INT $domain
+         */
+        public function updateUser($id, $name, $domain) {
+        
+            /* connect to the database */
+            $db = new Database();
+
+            /* prepare the statment */
+            $db->Prepare('UPDATE users SET username = ?, domain_id = ? WHERE user_id = ? LIMIT 1');
+
+            /* bind the parameter */
+            $db->BindParam(1, $name);
+            $db->BindParam(2, $domain);
+            $db->BindParam(3, $id);
+
+            /* execute the statement */
+            $db->StmtExecute();
+
+            /* terminate the connection */
+            $db->Disconnect();
+        }
     }
 
 ?>

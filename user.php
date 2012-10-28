@@ -63,6 +63,7 @@
         && isset($_POST['create_user_domain']) && ($_POST['create_user_domain'] != '')
         && isset($_POST['user_password']) && ($_POST['user_password'] != '') ) {
 
+        /* SECURITY CHECK */
         if ( $_POST['create_user_username'] != $_SESSION['create_user']['username']
             || $_POST['create_user_domain'] != $_SESSION['create_user']['domain_id']) {
             /* SECURITY BREAK: POST don't match SESSION */
@@ -101,13 +102,14 @@
         } else {
             /* invalid */
             // TODO: insert smart error handling here!
-            die;
+            die('Invalid user ID!');
         }
     }
 
     /* step 02 */
     if ( isset($_POST['delete_confirm_id']) && ($_POST['delete_confirm_id'] != '') ) {
 
+        /* SECURITY CHECK */
         if ( $_POST['delete_confirm_id'] != $_SESSION['delete_user'] ) {
             die('SECURITY BREAKING DETECTED!');
         }
@@ -115,6 +117,66 @@
         $tmp_user = new User($_POST['delete_confirm_id']);
 
         $tmp_user->delete();
+        $_SESSION['delete_user'] = NULL;
+    }
+
+
+    /* MODIFY existing user
+     * Modification is splitted in two steps
+     *      01: select the domain to be deleted
+     *      02: make the changes
+     */
+
+    /* step 01 */
+    if ( isset($_POST['modify_user_id']) && ($_POST['modify_user_id'] != '')
+        && !isset($_POST['modify_user_name']) && !isset($_POST['modify_user_domain']) ) {
+
+        $tmp_user = new User($_POST['modify_user_id']);
+
+        /* validation */
+        if ( $tmp_user->getUserID() == $_POST['modify_user_id'] ) {
+            /* valid */
+
+            /* we store the necessary information in the session */
+            $_SESSION['modify_user'] = $_POST['modify_user_id'];
+
+            $dd_dom_list = array();
+            foreach( new DomainList() as $dom ) {
+                $dd_dom_list[] = array(
+                    'id'    => $dom->getDomainID(),
+                    'name'  => $dom->getDomainName(),
+                );
+            }
+            $frontend->assign('MODIFY_USER_DOMAIN_DD', $dd_dom_list);
+
+            $frontend->assign('MODIFY_USER_ID', $_POST['modify_user_id']);
+            $frontend->assign('MODIFY_USER_NAME', $tmp_user->getUserName());
+            $frontend->assign('MODIFY_USER_DOMAIN', $tmp_user->getDomainID());
+            $frontend->display('user_modify.tpl');
+            die;
+        } else {
+            /* invalid */
+            // TODO: insert smart error handling here!
+            die('Invalid user ID!');
+        }
+    }
+
+
+    /* step 02 */
+    if ( isset($_POST['modify_user_id']) && ($_POST['modify_user_id'] != '')
+        && isset($_POST['modify_user_name']) && ($_POST['modify_user_name'] != '')
+        && isset($_POST['modify_user_domain']) && ($_POST['modify_user_domain'] != '') ) {
+
+        /* SECURITY CHECK */
+        if ( $_POST['modify_user_id'] != $_SESSION['modify_user'] ) {
+            die('SECURITY BREAKING DETECTED!');
+        }
+
+        $tmp_user = new User($_POST['modify_user_id']);
+
+        $tmp_user->setUserName($_POST['modify_user_name']);
+        $tmp_user->setDomainID($_POST['modify_user_domain']);
+        $tmp_user = NULL;
     }
 
 
