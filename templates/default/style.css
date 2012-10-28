@@ -139,6 +139,9 @@ table.listing td.modify button.inline>div>div>div {
 table.listing td.delete button.inline>div>div>div {
     background-image:   url(gfx/button_inline_delete.gif);
 }
+table.listing td.resetpassword button.inline>div>div>div {
+    background-image:   url(gfx/button_inline_key.gif);
+}
 table.listing tr.odd button.inline>div,
 table.listing tr.odd button.inline>div>div>div {
     background-position:    0 -36px;
@@ -285,6 +288,49 @@ div#user_overview table.create_new_user td.col3 select {
 div#user_overview table.create_new_user td.col2 {
     font-size:          12pt;
     font-weight:        bold;
+}
+div#user_overview table.create_new_user button.inline>div>div>div {
+    background-image:   url(gfx/button_inline_create_user.gif);
+}
+div#user_create p,
+div#user_modify p,
+div#user_resetpassword p {
+    margin:             10px;
+}
+div#user_create div#user_create_form_box,
+div#user_modify div#user_modify_form_box,
+div#user_resetpassword div#resetpassword_form_box {
+    text-align:         center;
+}
+div#user_create div#user_create_form_box input,
+div#user_modify div#user_modify_form_box input,
+div#user_resetpassword div#resetpassword_form_box input {
+    margin:             10px 0;
+    font-size:          14pt;
+    width:              300px;
+}
+div#page_user_confirm_delete {
+    margin:             20px 0 30px 0;
+    text-align:         center;
+}
+div#page_user_confirm_delete button.confirm:hover>div,
+div#page_user_confirm_delete button.confirm:hover>div>div>div {
+    background-position:    0 -99px;
+}
+div#page_user_confirm_delete button.confirm:hover>div>div {
+    background-position:    100% -99px;
+}
+div#user_modify div#user_modify_form_box table {
+    margin: 0 auto;
+}
+div#user_modify div#user_modify_form_box table td.col2 {
+    padding:            0 5px;
+    font-size:          16pt;
+    font-weight:        bold;
+}
+div#user_modify div#user_modify_form_box select {
+    margin:             10px 0;
+    font-size:          14pt;
 }
 
 
