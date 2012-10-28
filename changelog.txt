@@ -1,3 +1,11 @@
+alpha0.3:
+  * User objects implemented
+  	* User objects represent mail-accounts (please note the difference between
+	a mail-account and an alias: mail-accounts are real accounts with a
+	password, that can be used for fetching mails via Dovecot. Aliases are
+	merely 'virtual mail addresses', that don't really exist, but are able to
+	receive mails. Mails that are received by an alias are forwarded to
+	another address, which is not necessarily of the same domain)
 alpha0.2:
   * Domain objects implemented
   	* Domains can be created, modified and deleted

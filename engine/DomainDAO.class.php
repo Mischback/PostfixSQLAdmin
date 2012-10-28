@@ -24,7 +24,7 @@
          *  @retval MIXED
          */
         public function getDomainByID($id) {
-            return $this->getDomain('SELECT a.domain_id AS id, a.domain_name AS name, COUNT(b.user_id) AS users FROM domains AS a LEFT JOIN users AS b ON (a.domain_id = b.domain_id) WHERE a.domain_id = ? GROUP BY (a.domain_id) LIMIT 1', $id);
+            return $this->getDomain('a.domain_id = ?', $id);
         }
 
         /** @brief  Fetches all information about a domain specified by $name
@@ -32,15 +32,15 @@
          *  @retval MIXED
          */
         public function getDomainByName($name) {
-            return $this->getDomain('SELECT a.domain_id AS id, a.domain_name AS name, COUNT(b.user_id) AS users FROM domains AS a LEFT JOIN users AS b ON (a.domain_id = b.domain_id) WHERE a.domain_name = ? GROUP BY (a.domain_id) LIMIT 1', $name);
+            return $this->getDomain('a.domain_name = ?', $name);
         }
 
         /** @brief  Generic function to retrieve a single domain
-         *  @param  STRING $sql The SQL-statement to use
+         *  @param  STRING $where The WHERE part of the statement
          *  @param  MIXED $param
          *  @retval MIXED
          */
-        private function getDomain($sql, $param) {
+        private function getDomain($where, $param) {
 
             $tmp_id = NULL;
             $tmp_name = NULL;
@@ -50,6 +50,9 @@
             $db = new Database();
 
             /* prepare the statment */
+            $sql = 'SELECT a.domain_id AS id, a.domain_name AS name, COUNT(b.user_id) AS users FROM domains AS a LEFT JOIN users AS b ON (a.domain_id = b.domain_id) WHERE ';
+            $sql .= $where;
+            $sql .= ' GROUP BY (a.domain_id) LIMIT 1';
             $db->Prepare($sql);
 
             /* bind the parameter */

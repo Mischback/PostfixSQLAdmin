@@ -109,6 +109,20 @@
 
 
         /** @brief  The constructor
+         *  @param  INT $id
+         *  @param  STRING $username
+         *  @param  INT $domain_id
+         *  @param  STRING $password
+         *  @param  STRING $mail
+         *
+         *  The constructor can handle different modes to retrieve User objects:
+         *      * retrieve a User by its $id
+         *      * retrieve a User by its $username and $domain_id
+         *      * retrieve a User by its $username and $domain_id and $password
+         *      * retrieve a User by its $mail
+         *
+         *  To create a new User object, the method $username, $domain_id and
+         *  $password is used.
          */
         public function __construct($id = NULL, $username = NULL, $domain_id = NULL, $password = NULL, $mail = NULL) {
 
@@ -119,6 +133,9 @@
             }
             elseif ( isset($username) && isset($domain_id) && !isset($password) ) {
                 $tmp_data = $dao->getUserByNameAndDomainID($username, $domain_id);
+            }
+            elseif ( isset($mail) ) {
+                $tmp_data = $dao->getUserByMail($mail);
             }
             elseif ( isset($username) && isset($domain_id) && isset($password) ) {
                 $tmp_data = $dao->getUserByNameDomainIDAndPassword($username, $domain_id, $password);

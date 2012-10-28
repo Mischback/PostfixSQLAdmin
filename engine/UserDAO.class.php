@@ -61,7 +61,7 @@
         /** @brief  Generic function to retrieve a single user
          *  @param  STRING $where The part of the where-clause that matters
          *  @param  MIXED  $param
-         *  @reval  MIXED
+         *  @retval MIXED
          */
         private function getUser($where, $param) {
         
