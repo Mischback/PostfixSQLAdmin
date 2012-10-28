@@ -76,6 +76,48 @@
     }
 
 
+    /* DELETE existing user
+     * Deletion is splitted in two steps
+     *      01: select the domain to be deleted
+     *      02: confirm deletion
+     */
+
+    /* step 01 */
+    if ( isset($_POST['delete_user_id']) && ($_POST['delete_user_id'] != '') ) {
+
+        $tmp_user = new User($_POST['delete_user_id']);
+
+        /* validation */
+        if ( $tmp_user->getUserID() == $_POST['delete_user_id'] ) {
+            /* valid */
+
+            /* we store the necessary information in the session */
+            $_SESSION['delete_user'] = $_POST['delete_user_id'];
+
+            $frontend->assign('DELETE_USER_ID', $_POST['delete_user_id']);
+            $frontend->assign('DELETE_USER_MAIL', $tmp_user->getUserMail());
+            $frontend->display('user_delete_confirm.tpl');
+            die;
+        } else {
+            /* invalid */
+            // TODO: insert smart error handling here!
+            die;
+        }
+    }
+
+    /* step 02 */
+    if ( isset($_POST['delete_confirm_id']) && ($_POST['delete_confirm_id'] != '') ) {
+
+        if ( $_POST['delete_confirm_id'] != $_SESSION['delete_user'] ) {
+            die('SECURITY BREAKING DETECTED!');
+        }
+
+        $tmp_user = new User($_POST['delete_confirm_id']);
+
+        $tmp_user->delete();
+    }
+
+
     /* list users
      *
      */

@@ -183,6 +183,28 @@
             /* terminate the connection */
             $db->Disconnect();
         }
+
+
+        /** @brief  Deletes an existing user
+         *  @param  INT $id
+         */
+        public function deleteUserByID($id) {
+
+            /* connect to the database */
+            $db = new Database();
+
+            /* prepare the statment */
+            $db->Prepare('DELETE FROM users WHERE user_id = ? LIMIT 1');
+
+            /* bind the parameter */
+            $db->BindParam(1, $id);
+
+            /* execute the statement */
+            $db->StmtExecute();
+
+            /* terminate the connection */
+            $db->Disconnect();
+        }
     }
 
 ?>

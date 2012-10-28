@@ -107,6 +107,15 @@
                 $this->domain_name = $tmp_data['domain_name'];
             }
         }
+
+
+        /** @brief  Deletes this user from the database
+         */
+        public function delete() {
+            
+            $dao = new UserDAO();
+            $dao->deleteUserByID($this->user_id);
+        }
     }
 
 
