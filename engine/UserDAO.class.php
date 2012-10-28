@@ -133,7 +133,7 @@
             if ( $domain !== NULL ) {
                 $sql .= ' WHERE domain_id = ?';
             }
-            $sql .= ' ORDER BY b.domain_name';
+            $sql .= ' ORDER BY b.domain_name, a.username';
             $db->Prepare($sql);
 
             /* bind the parameter */

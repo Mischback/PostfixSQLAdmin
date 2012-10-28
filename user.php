@@ -33,6 +33,7 @@
             die('No domain given!');
         }
 
+        /* validation */
         $tmp_user = new User(NULL, $_POST['create_user_username'], $_POST['create_user_domain']);
 
         if ( $tmp_user->getUserName() == $_POST['create_user_username']
@@ -51,6 +52,7 @@
             'domain_id' => $_POST['create_user_domain'],
         );
 
+        /* prepare the display of step 02 */
         $frontend->assign('CREATE_USERNAME', $_POST['create_user_username']);
         $frontend->assign('CREATE_DOMAIN_ID', $_POST['create_user_domain']);
         $frontend->display('user_create_password.tpl');
@@ -63,13 +65,16 @@
         && isset($_POST['create_user_domain']) && ($_POST['create_user_domain'] != '')
         && isset($_POST['user_password']) && ($_POST['user_password'] != '') ) {
 
-        /* SECURITY CHECK */
+        /* SECURITY CHECK
+         * Do the given fields match the information of step 01?
+         */
         if ( $_POST['create_user_username'] != $_SESSION['create_user']['username']
             || $_POST['create_user_domain'] != $_SESSION['create_user']['domain_id']) {
             /* SECURITY BREAK: POST don't match SESSION */
             die('SECURITY BREAKING DETECTED!');
         }
 
+        /* this should create a new user! */
         $tmp_user = new User(NULL, $_POST['create_user_username'], $_POST['create_user_domain'], $_POST['user_password']);
 
         /* get rid of the session backup */
@@ -89,34 +94,40 @@
         $tmp_user = new User($_POST['delete_user_id']);
 
         /* validation */
-        if ( $tmp_user->getUserID() == $_POST['delete_user_id'] ) {
-            /* valid */
-
-            /* we store the necessary information in the session */
-            $_SESSION['delete_user'] = $_POST['delete_user_id'];
-
-            $frontend->assign('DELETE_USER_ID', $_POST['delete_user_id']);
-            $frontend->assign('DELETE_USER_MAIL', $tmp_user->getUserMail());
-            $frontend->display('user_delete_confirm.tpl');
-            die;
-        } else {
-            /* invalid */
+        if ( $tmp_user->getUserID() != $_POST['delete_user_id'] ) {
             // TODO: insert smart error handling here!
             die('Invalid user ID!');
         }
+
+        /* we store the necessary information in the session
+         * We will use this to verify the information in step 02
+         */
+        $_SESSION['delete_user'] = $_POST['delete_user_id'];
+
+        /* prepare the display of step 02 */
+        $frontend->assign('DELETE_USER_ID', $_POST['delete_user_id']);
+        $frontend->assign('DELETE_USER_MAIL', $tmp_user->getUserMail());
+        $frontend->display('user_delete_confirm.tpl');
+
+        die;
     }
 
     /* step 02 */
     if ( isset($_POST['delete_confirm_id']) && ($_POST['delete_confirm_id'] != '') ) {
 
-        /* SECURITY CHECK */
+        /* SECURITY CHECK
+         * Do the given fields match the information of step 01?
+         */
         if ( $_POST['delete_confirm_id'] != $_SESSION['delete_user'] ) {
             die('SECURITY BREAKING DETECTED!');
         }
 
         $tmp_user = new User($_POST['delete_confirm_id']);
 
+        /* this will delete this user */
         $tmp_user->delete();
+
+        /* get rid of the session backup */
         $_SESSION['delete_user'] = NULL;
     }
 
@@ -134,31 +145,32 @@
         $tmp_user = new User($_POST['modify_user_id']);
 
         /* validation */
-        if ( $tmp_user->getUserID() == $_POST['modify_user_id'] ) {
-            /* valid */
-
-            /* we store the necessary information in the session */
-            $_SESSION['modify_user'] = $_POST['modify_user_id'];
-
-            $dd_dom_list = array();
-            foreach( new DomainList() as $dom ) {
-                $dd_dom_list[] = array(
-                    'id'    => $dom->getDomainID(),
-                    'name'  => $dom->getDomainName(),
-                );
-            }
-            $frontend->assign('MODIFY_USER_DOMAIN_DD', $dd_dom_list);
-
-            $frontend->assign('MODIFY_USER_ID', $_POST['modify_user_id']);
-            $frontend->assign('MODIFY_USER_NAME', $tmp_user->getUserName());
-            $frontend->assign('MODIFY_USER_DOMAIN', $tmp_user->getDomainID());
-            $frontend->display('user_modify.tpl');
-            die;
-        } else {
-            /* invalid */
+        if ( $tmp_user->getUserID() != $_POST['modify_user_id'] ) {
             // TODO: insert smart error handling here!
             die('Invalid user ID!');
         }
+
+        /* we store the necessary information in the session
+         * We will use this to verify the information in step 02
+         */
+        $_SESSION['modify_user'] = $_POST['modify_user_id'];
+
+        /* prepare the display of step 02 */
+        $dd_dom_list = array();
+        foreach( new DomainList() as $dom ) {
+            $dd_dom_list[] = array(
+                'id'    => $dom->getDomainID(),
+                'name'  => $dom->getDomainName(),
+            );
+        }
+        $frontend->assign('MODIFY_USER_DOMAIN_DD', $dd_dom_list);
+
+        $frontend->assign('MODIFY_USER_ID', $_POST['modify_user_id']);
+        $frontend->assign('MODIFY_USER_NAME', $tmp_user->getUserName());
+        $frontend->assign('MODIFY_USER_DOMAIN', $tmp_user->getDomainID());
+        $frontend->display('user_modify.tpl');
+
+        die;
     }
 
     /* step 02 */
@@ -166,16 +178,22 @@
         && isset($_POST['modify_user_name']) && ($_POST['modify_user_name'] != '')
         && isset($_POST['modify_user_domain']) && ($_POST['modify_user_domain'] != '') ) {
 
-        /* SECURITY CHECK */
+        /* SECURITY CHECK
+         * Do the given fields match the information of step 01?
+         */
         if ( $_POST['modify_user_id'] != $_SESSION['modify_user'] ) {
             die('SECURITY BREAKING DETECTED!');
         }
 
         $tmp_user = new User($_POST['modify_user_id']);
 
+        /* make the changes to the user object */
         $tmp_user->setUserName($_POST['modify_user_name']);
         $tmp_user->setDomainID($_POST['modify_user_domain']);
-        $tmp_user = NULL;
+        $tmp_user = NULL;   /* force update of the user object */
+
+        /* get rid of the session backup */
+        $_SESSION['modify_user'] = NULL;
     }
 
 
@@ -193,7 +211,6 @@
         $tmp_user = new User($_POST['resetpassword_id']);
 
         if ( $tmp_user->getUserID() != $_POST['resetpassword_id'] ) {
-            /* invalid */
             // TODO: insert smart error handling here!
             die('Invalid user ID!');
         }
@@ -208,15 +225,21 @@
     }
 
     /* step 02 */
-    if ( isset($_POST['resetpassword_id']) && ($_POST['resetpassword_id'] != '') && isset($_POST['resetpassword_password']) && ($_POST['resetpassword_password'] != '') ) {
+    if ( isset($_POST['resetpassword_id']) && ($_POST['resetpassword_id'] != '')
+        && isset($_POST['resetpassword_password']) && ($_POST['resetpassword_password'] != '') ) {
 
+        /* SECURITY CHECK
+         * Do the given fields match the information of step 01?
+         */
         if ( $_POST['resetpassword_id'] != $_SESSION['resetpassword']) {
             die('SECURITY BREAKING DETECTED!');
         }
 
+        /* set the new password */
         $tmp_user = new User($_POST['resetpassword_id']);
         $tmp_user->setPassword($_POST['resetpassword_password']);
 
+        /* get rid of the session backup */
         $_SESSION['resetpassword'] = NULL;
     }
 
