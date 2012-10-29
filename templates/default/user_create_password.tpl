@@ -9,7 +9,7 @@
 
     <p>Assign a password for the new user!</p>
     <div id="user_create_form_box">
-{include file="user_form_password.tpl" CREATE_USER_BUTTON_CAPTION="create user"}
+{include file="form_user_create_password.tpl" CREATE_USER_BUTTON_CAPTION="create user"}
     </div>
 </div>
 {/block}

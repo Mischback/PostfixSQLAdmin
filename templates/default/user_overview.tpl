@@ -22,19 +22,19 @@
             <td class="col2">@</td>
             <td class="col3">{$USER_LIST[row].domain_name}</td>
             <td class="col4 modify">
-{include file="user_form_modify.tpl" USER_ID=$USER_LIST[row].user_id}
+{include file="form_user_overview_modify.tpl" USER_ID=$USER_LIST[row].user_id}
             </td>
             <td class="col5 resetpassword">
-{include file="user_form_resetpassword.tpl" USER_ID=$USER_LIST[row].user_id}
+{include file="form_user_overview_password.tpl" USER_ID=$USER_LIST[row].user_id}
             </td>
             <td class="col6 delete">
-{include file="user_form_delete.tpl" USER_ID=$USER_LIST[row].user_id}
+{include file="form_user_overview_delete.tpl" USER_ID=$USER_LIST[row].user_id}
             </td>
         </tr>
 {/section}
     </table>
 
     <h3>Create New Address</h3>
-{include file="user_form_create.tpl"}
+{include file="form_user_create.tpl"}
 </div>
 {/block}

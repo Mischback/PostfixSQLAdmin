@@ -1,5 +1,5 @@
 {*
-    user_form_modify.tpl
+    form_user_overview_password.tpl
 *}
 <form action="user.php" method="post">
     <input name="resetpassword_id" value="{$USER_ID}" type="hidden" />

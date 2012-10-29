@@ -1,5 +1,5 @@
 {*
-    domain_form_delete_confirm.tpl
+    form_domain_confirm_delete.tpl
 *}
 <form action="domain.php" method="post">
     <input name="delete_confirm_id" value="{$DOMAIN_ID}" type="hidden" />

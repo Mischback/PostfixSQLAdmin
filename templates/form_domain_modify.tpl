@@ -1,5 +1,5 @@
 {*
-    domain_form_modification.tpl
+    form_domain_modify.tpl
 *}
 <form action="domain.php" method="post">
     <input name="modify_domain_id" value="{$DOMAIN_ID}" type="hidden" />

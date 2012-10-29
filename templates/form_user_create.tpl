@@ -1,5 +1,5 @@
 {*
-    user_form_create.tpl
+    form_user_create.tpl
 *}
 <form action="user.php" method="post">
     <table class="create_new_user">

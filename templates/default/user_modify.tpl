@@ -8,7 +8,7 @@
     <h3>Modify User</h3>
 
     <div id="user_modify_form_box">
-{include file="user_form_modification.tpl"}
+{include file="form_user_modify.tpl"}
     </div>
 </div>
 {/block}
