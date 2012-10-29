@@ -262,19 +262,28 @@ div#domain_modify div#domain_modify_form_box input {
 
 
 /* ***** USER / ALIAS ***** */
-table.user_list td.col1 {
+table.user_list td.col1,
+table.alias_list td.col1 {
     padding-right:      5px;
     font-weight:        bold;
     border-right:       1px solid #aaa;
 }
-table.user_list td.col2 {
+table.user_list td.col2,
+table.alias_list td.col2 {
     padding:            0 0 0 5px;
 }
-table.user_list td.col3 {
+table.user_list td.col3,
+table.alias_list td.col3 {
     padding:            0 5px 0 0;
     border-right:       1px solid #aaa;
 }
-table.user_list tr.headline td.col1 {
+table.alias_list td.col4 {
+    padding:            0 5px;
+    border-right:       1px solid #aaa;
+}
+table.user_list tr.headline td.col1,
+table.alias_list tr.headline td.col1,
+table.alias_list tr.headline td.col4 {
     text-align:         center;
 }
 
