@@ -34,5 +34,6 @@
     }
 
     $frontend->assign('ALIAS_LIST', $alias_list);
+    $frontend->display('alias_overview.tpl');
 
 ?>

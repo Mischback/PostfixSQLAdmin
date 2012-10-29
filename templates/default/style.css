@@ -261,7 +261,7 @@ div#domain_modify div#domain_modify_form_box input {
 }
 
 
-/* ***** USER ***** */
+/* ***** USER / ALIAS ***** */
 table.user_list td.col1 {
     padding-right:      5px;
     font-weight:        bold;
