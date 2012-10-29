@@ -1,5 +1,5 @@
 {*
-    user_form_delete_confirm.tpl
+    form_user_confirm_delete.tpl
 *}
 <form action="user.php" method="post">
     <input name="delete_confirm_id" value="{$USER_ID}" type="hidden" />

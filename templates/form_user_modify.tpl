@@ -1,5 +1,5 @@
 {*
-    user_form_modification.tpl
+    form_user_modify.tpl
 *}
 <form action="user.php" method="post">
     <table>
