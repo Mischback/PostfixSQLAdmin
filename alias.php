@@ -13,4 +13,26 @@
     require_once('./engine/Alias.class.php');
     require_once('./engine/Domain.class.php');
 
+
+    /* list aliases
+     */
+    $alias_list = array();
+    if ( isset($_GET['domain']) && ($_GET['domain'] != '') ) {
+        $tmp_list = new AliasList($_GET['domain']);
+    } else {
+        $tmp_list = new AliasList();
+    }
+
+    foreach ( $tmp_list as $alias ) {
+        $alias_list[] = array(
+            'alias_id'      => $alias->getAliasID(),
+            'alias_name'    => $alias->getAliasName(),
+            'domain_id'     => $alias->getDomainID(),
+            'domain_name'   => $alias->getDomainName(),
+            'destination'   => $alias->getDestination(),
+        );
+    }
+
+    $frontend->assign('ALIAS_LIST', $alias_list);
+
 ?>
