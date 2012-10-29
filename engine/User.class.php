@@ -162,7 +162,7 @@
                     }
 
                     $dao->createUser($parsed_name, $domain_id, $password);
-                    $tmp_data = $dao->getUserByNameDomainIDAndPassword($username, $domain_id, $password);
+                    $tmp_data = $dao->getUserByNameDomainIDAndPassword($parsed_name, $domain_id, $password);
                 }
             }
 

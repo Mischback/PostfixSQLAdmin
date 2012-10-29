@@ -11,6 +11,9 @@
     /* fetch the DAO */
     require_once('./engine/DomainDAO.class.php');
 
+    /* fetch the validator */
+    require_once('./lib/validator.php');
+
 
     /** @class  Domain
      *  @brief  Represents a single Domain to be managed
@@ -59,12 +62,18 @@
 
         /** @brief  Sets the domain's name
          *  @param  STRING $name
-         *  @todo   insert some parsing here!
+         *  @todo   Error handling if illegal domain-part is given!
          */
         public function setDomainName($name) {
 
-            // TODO: insert some parsing here!
-            $this->domain_name = $name;
+            $parsed = checkDomain($name);
+
+            if ( $parsed === false ) {
+                // TODO: insert some smart error handling here!
+                die('setDomainName(): $name does not match domain-regex!');
+            }
+
+            $this->domain_name = $parsed;
             $this->modified = true;
         }
 
@@ -101,8 +110,14 @@
                 $tmp_data = $dao->getDomainByName($name);
 
                 if ( !$tmp_data ) {
-                    $dao->createDomain($name);
-                    $tmp_data = $dao->getDomainByName($name);
+                    $parsed = checkDomain($name);
+
+                    if ( $parsed === false ) {
+                        // TODO: insert smart error handling here!
+                        die('__construct() - mode createDomain: $name does not match domain-regex!');
+                    }
+                    $dao->createDomain($parsed);
+                    $tmp_data = $dao->getDomainByName($parsed);
                 }
             }
 
