@@ -278,14 +278,18 @@ table.user_list tr.headline td.col1 {
     text-align:         center;
 }
 
-div#user_overview table.create_new_user {
+div#user_overview table.create_new_user,
+div#alias_overview table.create_new_alias {
     margin:             5px 0 10px 10px;
 }
 div#user_overview table.create_new_user td.col1 input,
-div#user_overview table.create_new_user td.col3 select {
+div#user_overview table.create_new_user td.col3 select,
+div#alias_overview table.create_new_alias td.col1 input,
+div#alias_overview table.create_new_alias td.col3 select {
     margin:             0px 5px;
 }
-div#user_overview table.create_new_user td.col2 {
+div#user_overview table.create_new_user td.col2,
+div#alias_overview table.create_new_alias td.col2 {
     font-size:          12pt;
     font-weight:        bold;
 }

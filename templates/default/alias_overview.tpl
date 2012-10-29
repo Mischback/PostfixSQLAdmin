@@ -31,5 +31,6 @@
     </table>
 
     <h3>Create New Alias</h3>
+{include file="form_alias_create.tpl"}
 </div>
 {/block}

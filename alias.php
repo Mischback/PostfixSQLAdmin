@@ -33,7 +33,16 @@
         );
     }
 
+    $dd_dom_list = array();
+    foreach( new DomainList() as $dom ) {
+        $dd_dom_list[] = array(
+            'id'    => $dom->getDomainID(),
+            'name'  => $dom->getDomainName(),
+        );
+    }
+
     $frontend->assign('ALIAS_LIST', $alias_list);
+    $frontend->assign('DROPDOWN_DOMAIN_LIST', $dd_dom_list);
     $frontend->display('alias_overview.tpl');
 
 ?>
