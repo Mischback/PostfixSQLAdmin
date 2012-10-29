@@ -220,7 +220,7 @@
 
         $frontend->assign('RESETPASSWORD_ID', $_POST['resetpassword_id']);
         $frontend->assign('RESETPASSWORD_NAME', $tmp_user->getUserMail());
-        $frontend->display('user_resetpassword.tpl');
+        $frontend->display('user_reset_password.tpl');
         die;
     }
 

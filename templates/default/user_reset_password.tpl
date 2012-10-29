@@ -1,5 +1,5 @@
 {*
-    user_resetpassword.tpl
+    user_reset_password.tpl
 *}
 {extends file="user.tpl"}
 
@@ -9,7 +9,7 @@
 
     <p>Set new password for {$RESETPASSWORD_NAME}!</p>
     <div id="resetpassword_form_box">
-{include file="user_form_resetpassword_input.tpl"}
+{include file="form_user_reset_password.tpl"}
     </div>
 </div>
 {/block}
