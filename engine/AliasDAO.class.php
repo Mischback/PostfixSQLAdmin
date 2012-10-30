@@ -22,6 +22,15 @@
             return $this->getAlias('a.alias_id = ?', $id);
         }
 
+        /** @brief  Fetches all information about an alias specified by $name and $domain_id
+         *  @param  STRING $name
+         *  @param  INT $domain_id
+         *  @retval MIXED
+         */
+        public function getAliasByNameAndDomainID($name, $domain_id) {
+            return $this->getAlias('a.aliasname = ? AND a.domain_id = ?', array($name, $domain_id));
+        }
+
         /** @brief  Generic function to retrieve an alias
          *  @param  STRING $where The part of the where-clause that matters
          *  @oaram  MIXED $param
@@ -124,6 +133,32 @@
             $db->Disconnect();
 
             return $result;
+        }
+
+
+        /** @brief  Creates a new alias
+         *  @param  STRING $name
+         *  @param  INT $domain_id
+         *  @param  STRING $destination
+         */
+        public function createAlias($name, $domain_id, $destination) {
+            
+            /* connect to the database */
+            $db = new Database();
+
+            /* prepare the statement */
+            $db->Prepare('INSERT INTO aliases VALUES (NULL, ?, ?, ?)');
+
+            /* bind the parameter */
+            $db->BindParam(1, $domain_id);
+            $db->BindParam(2, $name);
+            $db->BindParam(3, $destination);
+
+            /* execute the statement */
+            $db->StmtExecute();
+
+            /* terminate the connection */
+            $db->Disconnect();
         }
     }
 

@@ -26,7 +26,7 @@
 {include file="form_alias_overview_modify.tpl" ALIAS_ID=$ALIAS_LIST[row].alias_id}
             </td>
             <td class="col6 delete">
-{include file="form_alias_overview_modify.tpl" ALIAS_ID=$ALIAS_LIST[row].alias_id}
+{include file="form_alias_overview_delete.tpl" ALIAS_ID=$ALIAS_LIST[row].alias_id}
             </td>
         </tr>
 {/section}

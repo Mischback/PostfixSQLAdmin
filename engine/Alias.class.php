@@ -97,12 +97,20 @@
         /** @brief  The constructor
          *  @param  INT $id
          */
-        public function __construct($id = NULL) {
+        public function __construct($id = NULL, $name = NULL, $domain_id = NULL, $destination = NULL) {
             
             $dao = new AliasDAO();
 
             if ( isset($id) ) {
                 $tmp_data = $dao->getAliasByID($id);
+            }
+            elseif ( isset($name) && isset($domain_id) && isset($destination) ) {
+                $tmp_data = $dao->getAliasByNameAndDomainID($name, $domain_id);
+
+                if ( !$tmp_data ) {
+                    $dao->createAlias($name, $domain_id, $destination);
+                    $tmp_data = $dao->getAliasByNameAndDomainID($name, $domain_id);
+                }
             }
 
             /* fill the object */
