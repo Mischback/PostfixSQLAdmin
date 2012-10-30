@@ -182,6 +182,34 @@
             /* terminate the connection */
             $db->Disconnect();
         }
+
+
+        /** @brief  Updates an existing alias
+         *  @param  INT $id
+         *  @param  STRING $name
+         *  @param  INT $domain_id
+         *  @param  STRING $destination
+         */
+        public function updateAlias($id, $name, $domain_id, $destination) {
+        
+            /* connect to the database */
+            $db = new Database();
+
+            /* prepare the statement */
+            $db->Prepare('UPDATE aliases SET aliasname = ?, domain_id = ?, destination = ? WHERE alias_id = ? LIMIT 1');
+
+            /* bind the parameter */
+            $db->BindParam(1, $name);
+            $db->BindParam(2, $domain_id);
+            $db->BindParam(3, $destination);
+            $db->BindParam(4, $id);
+
+            /* execute the statement */
+            $db->StmtExecute();
+
+            /* terminate the connection */
+            $db->Disconnect();
+        }
     }
 
 ?>

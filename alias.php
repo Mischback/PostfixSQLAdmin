@@ -93,7 +93,9 @@
      */
 
     /* step 01 */
-    if ( isset($_POST['modify_alias_id']) && ($_POST['modify_alias_id'] != '') ) {
+    if ( isset($_POST['modify_alias_id']) && ($_POST['modify_alias_id'] != '')
+        && !isset($_POST['modify_alias_name']) && !isset($_POST['modify_alias_domain'])
+        && !isset($_POST['modify_alias_destination']) ) {
 
         $tmp_alias = new Alias($_POST['modify_alias_id']);
 
@@ -107,6 +109,16 @@
         $_SESSION['modify_alias'] = $_POST['modify_alias_id'];
 
         /* prepare the display of step 02 */
+        $dd_dom_list = array();
+        foreach( new DomainList() as $dom ) {
+            $dd_dom_list[] = array(
+                'id'    => $dom->getDomainID(),
+                'name'  => $dom->getDomainName(),
+            );
+        }
+        $frontend->assign('MODIFY_ALIAS_DOMAIN_DD', $dd_dom_list);
+
+        /* prepare the display of step 02 */
         $frontend->assign('MODIFY_ALIAS_ID', $_POST['modify_alias_id']);
         $frontend->assign('MODIFY_ALIAS_NAME', $tmp_alias->getAliasName());
         $frontend->assign('MODIFY_ALIAS_DOMAIN', $tmp_alias->getDomainID());
@@ -114,6 +126,29 @@
         $frontend->display('alias_modify.tpl');
 
         die;
+    }
+
+    /* step 02 */
+    if ( isset($_POST['modify_alias_id']) && ($_POST['modify_alias_id'] != '')
+        && isset($_POST['modify_alias_name']) && ($_POST['modify_alias_name'] != '')
+        && isset($_POST['modify_alias_domain']) && ($_POST['modify_alias_domain'] != '')
+        && isset($_POST['modify_alias_destination']) && ($_POST['modify_alias_destination'] != '') ) {
+
+        /* SECURITY CHECK
+         * Do the given fields match the information of step 01?
+         */
+        if ( $_POST['modify_alias_id'] != $_SESSION['modify_alias'] ) {
+            die('SECURITY BREAKING DETECTED!');
+        }
+
+        $tmp_alias = new Alias($_POST['modify_alias_id']);
+
+        /* make the changes to the alias object */
+        $tmp_alias->setAliasName($_POST['modify_alias_name']);
+        $tmp_alias->setDomainID($_POST['modify_alias_domain']);
+        $tmp_alias->setDestination($_POST['modify_alias_destination']);
+
+        $tmp_alias = NULL;
     }
 
 

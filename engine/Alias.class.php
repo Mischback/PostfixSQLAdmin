@@ -14,6 +14,17 @@
      */
     class Alias {
 
+        /** @brief  This variable controls, if a database update is neccessary
+         *
+         *  For the User class, this is only the case, if the functions
+         *  setAliasName(), setDomainID() and setDestination() are used.
+         *
+         *  The acutal update to the DB will happen on object destruction. See
+         *  __destruct() for further details.
+         */
+        private $modified = false;
+
+
         /** @brief  The alias' ID
          */
         private $alias_id = NULL;
@@ -29,8 +40,6 @@
         /** @brief  The alias' name
          *
          *  This is also the local-part of the alias
-         *
-         *  @todo: Check this against some RegEx to validate this!
          */
         private $alias_name = NULL;
 
@@ -39,6 +48,16 @@
          */
         public function getAliasName() {
             return $this->alias_name;
+        }
+
+        /** @brief  Sets the alias' name
+         *  @param  STRING $name
+         *
+         *  @todo: Check this against some RegEx to validate this!
+         */
+        public function setAliasName($name) {
+            $this->alias_name = $name;
+            $this->modified = true;
         }
 
 
@@ -53,6 +72,14 @@
          */
         public function getDomainID() {
             return $this->domain_id;
+        }
+
+        /** @brief  Sets the alias' domain ID
+         *  @param  INT $domain_id
+         */
+        public function setDomainID($domain_id) {
+            $this->domain_id = $domain_id;
+            $this->modified = true;
         }
 
 
@@ -81,8 +108,6 @@
         /** @brief  The destination of this alias
          *
          *  Mail will be forwarded to this address
-         *
-         *  @todo: Check this against some RegEx to validate this!
          */
         private $destination = NULL;
 
@@ -91,6 +116,16 @@
          */
         public function getDestination() {
             return $this->destination;
+        }
+
+        /** @brief  Sets the destination of this alias
+         *  @param  STRING $destination
+         *
+         *  @todo: Check this against some RegEx to validate this!
+         */
+        public function setDestination($destination) {
+            $this->destination = $destination;
+            $this->modified = true;
         }
 
 
@@ -120,6 +155,23 @@
                 $this->domain_id = $tmp_data['domain_id'];
                 $this->domain_name = $tmp_data['domain_name'];
                 $this->destination = $tmp_data['destination'];
+            }
+        }
+
+
+        /** @brief  The destructor
+         *
+         *  This function is called, when the object is destructed. In PHP
+         *  objects get destructed, if all references to the object are deleted.
+         *
+         *  If the object has been changed in its lifecycle, this will perform
+         *  an update of the database tables.
+         */
+        public function __destruct() {
+            
+            if ( $this->modified ) {
+                $dao = new AliasDAO();
+                $dao->updateAlias($this->alias_id, $this->alias_name, $this->domain_id, $this->destination);
             }
         }
 
