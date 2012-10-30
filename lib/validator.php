@@ -8,8 +8,9 @@
     /* RFC5322 defines a character set to be used in atoms
      * see: http://tools.ietf.org/html/rfc5322#section-3.2.3
      */
-    define('VALIDATOR_DOT_ATOM_CHAR', "[a-z0-9!#$%&'*+-/=?^_`{|}~]");
+    define('VALIDATOR_DOT_ATOM_CHAR', "[a-z0-9!#$%&'*+-//=?^_`{|}~]");
     
+    define('VALIDATOR_DOMAIN', '(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?');
 
     /** @brief  Checks the local part of an email-address
      *  @param  STRING $address The address to check
@@ -65,13 +66,38 @@
          * RFC5321 defines a character set to be used in domains
          * see: http://tools.ietf.org/html/rfc5321#section-4.1.2
          */
-        $regex = '@^(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$@'
+        $regex = '@^'.VALIDATOR_DOMAIN.'$@';
 
         if ( preg_match($regex, $domain) == 0 ) {
             return false;
         }
 
         return $domain;
+    }
+
+
+    /** @brief  Checks a full eMail-address
+     *  @param  STRING $address The address to check
+     *  @retval MIXED The result of the check
+     *
+     *  Basically we just combine the functions checkLocalAddress() and 
+     *  checkDomain().
+     */
+    function checkMail($address) {
+    
+        /* remove unnecessary whitespaces
+         * removes ' ', '\t', '\n', '\r', '\0', '\x0B'
+         * see: http://php.net/manual/en/function.trim.php
+         */
+        $address = strtolower(trim($address));
+
+        $regex = '@^'.VALIDATOR_DOT_ATOM_CHAR.'+(?:\.'.VALIDATOR_DOT_ATOM_CHAR.'+)*(\@)'.VALIDATOR_DOMAIN.'$@';
+
+        if ( preg_match($regex, $address) == 0 ) {
+            return false;
+        }
+
+        return $address;
     }
 
 ?>

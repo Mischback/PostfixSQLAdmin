@@ -8,6 +8,9 @@
     /* fetch our DAO */
     require_once('./engine/AliasDAO.class.php');
 
+    /* fetch the validator */
+    require_once('./lib/validator.php');
+
 
     /** @class  Alias
      *  @brief  TODO: insert smart description here!
@@ -53,10 +56,18 @@
         /** @brief  Sets the alias' name
          *  @param  STRING $name
          *
-         *  @todo: Check this against some RegEx to validate this!
+         *  @todo: Error handling if illegal local-part is given!
          */
         public function setAliasName($name) {
-            $this->alias_name = $name;
+
+            $parsed = checkLocalAddress($name);
+
+            if ( $parsed === false ) {
+                // TODO: insert some smart error handling here!
+                die('setAliasName(): $name does not match mail-regex!');
+            }
+
+            $this->alias_name = $parsed;
             $this->modified = true;
         }
 
@@ -121,10 +132,18 @@
         /** @brief  Sets the destination of this alias
          *  @param  STRING $destination
          *
-         *  @todo: Check this against some RegEx to validate this!
+         *  @todo: Error handling if illegal local-part is given!
          */
         public function setDestination($destination) {
-            $this->destination = $destination;
+
+            $parsed = checkMail($destination);
+
+            if ( !$parsed ) {
+                // TODO: insert smart error handling here!
+                die('setDestination(): $destination does not match mail-regex!');
+            }
+
+            $this->destination = $parsed;
             $this->modified = true;
         }
 
@@ -143,8 +162,26 @@
                 $tmp_data = $dao->getAliasByNameAndDomainID($name, $domain_id);
 
                 if ( !$tmp_data ) {
-                    $dao->createAlias($name, $domain_id, $destination);
-                    $tmp_data = $dao->getAliasByNameAndDomainID($name, $domain_id);
+                    /* here we create new aliases!
+                     * Make sure to check $name against our RegEx. No need to
+                     * check the $domain_id, because the FK constraint of the
+                     * database will only allow valid numbers here.
+                     */
+
+                    $parsed_name = checkLocalAddress($name);
+                    if ( $parsed_name === false ) {
+                        // TODO: insert smart error handling here!
+                        die('__construct() - mode createUser(): $name does not match mail-regex!');
+                    }
+
+                    $parsed_dest = checkMail($destination);
+                    if ( $parsed_dest === false ) {
+                        // TODO: insert smart error handling here!
+                        die('__construct() - mode createUser(): $destination does not match mail-regex!');
+                    }
+
+                    $dao->createAlias($parsed_name, $domain_id, $parsed_dest);
+                    $tmp_data = $dao->getAliasByNameAndDomainID($parsed_name, $domain_id);
                 }
             }
 
