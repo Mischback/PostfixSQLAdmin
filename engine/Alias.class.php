@@ -1,7 +1,7 @@
 <?php
 
     /** @file   Alias.class.php
-     *  @brief  TODO: insert smart description here!
+     *  @brief  Contains the classes that handle Alias objects
      */
 
 
@@ -13,7 +13,13 @@
 
 
     /** @class  Alias
-     *  @brief  TODO: insert smart description here!
+     *  @brief  Represents a single Alias object
+     *
+     *  Alias objects represent certain forward-addresses. There is no mailbox
+     *  for aliases, instead they are forwarded to 'real' mail-addresses.
+     *
+     *  These addresses may be hosted on the same server but can be of a 
+     *  totally different domain aswell.
      */
     class Alias {
 
@@ -150,6 +156,9 @@
 
         /** @brief  The constructor
          *  @param  INT $id
+         *  @param  STRING $name
+         *  @param  INT $domain_id
+         *  @param  STRING $destination
          */
         public function __construct($id = NULL, $name = NULL, $domain_id = NULL, $destination = NULL) {
             

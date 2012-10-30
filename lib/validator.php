@@ -1,6 +1,6 @@
 <?php
 
-    /*  @file   validator.php
+    /** @file   validator.php
      *  @brief  Contains functions to validate user input
      */
 

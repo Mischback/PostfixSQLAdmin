@@ -1,3 +1,5 @@
+alpha0.4:
+  * Alias objects implemented
 alpha0.3:
   * User objects implemented
   	* User objects represent mail-accounts (please note the difference between

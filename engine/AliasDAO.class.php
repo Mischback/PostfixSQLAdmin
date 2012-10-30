@@ -1,7 +1,7 @@
 <?php
 
     /** @file   AliasDAO.class.php
-     *  @brief  TODO: insert smart description here!
+     *  @brief  Contains the data access layer for Alias objects
      */
 
 
@@ -10,7 +10,7 @@
 
 
     /** @class  AliasDAO
-     *  @brief  TODO: insert smart description here!
+     *  @brief  Handles everything to make Alias objects persistent
      */
     class AliasDAO {
 
@@ -33,7 +33,7 @@
 
         /** @brief  Generic function to retrieve an alias
          *  @param  STRING $where The part of the where-clause that matters
-         *  @oaram  MIXED $param
+         *  @param  MIXED $param
          *  @retval MIXED
          */
         private function getAlias($where, $param) {
