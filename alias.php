@@ -86,6 +86,37 @@
     }
 
 
+    /* MODIFY EXISTING ALIAS
+     * Modification is splitted in tow steps:
+     *      01: select the alias to be modified
+     *      02: make changes
+     */
+
+    /* step 01 */
+    if ( isset($_POST['modify_alias_id']) && ($_POST['modify_alias_id'] != '') ) {
+
+        $tmp_alias = new Alias($_POST['modify_alias_id']);
+
+        /* validation */
+        if ( $tmp_alias->getAliasID() != $_POST['modify_alias_id'] ) {
+            // TODO: insert smart error handling here!
+            die('Invalid alias ID');
+        }
+
+        /* store the necessary information in the session */
+        $_SESSION['modify_alias'] = $_POST['modify_alias_id'];
+
+        /* prepare the display of step 02 */
+        $frontend->assign('MODIFY_ALIAS_ID', $_POST['modify_alias_id']);
+        $frontend->assign('MODIFY_ALIAS_NAME', $tmp_alias->getAliasName());
+        $frontend->assign('MODIFY_ALIAS_DOMAIN', $tmp_alias->getDomainID());
+        $frontend->assign('MODIFY_ALIAS_DESTINATION', $tmp_alias->getDestination());
+        $frontend->display('alias_modify.tpl');
+
+        die;
+    }
+
+
     /* list aliases
      */
     $alias_list = array();
