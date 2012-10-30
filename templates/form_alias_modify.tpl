@@ -14,10 +14,13 @@
             <td class="col4"><br /><br /></td>
         </tr>
         <tr>
-            <td class="col1" colspan="3">forward to: <input name="modify_alias_destination" value="{$MODIFY_ALIAS_DESTINATION}" type="text" /></td>
-            <td class="col4">
+            <td class="col1" colspan="4">forward to: <input name="modify_alias_destination" value="{$MODIFY_ALIAS_DESTINATION}" type="text" /></td>
+        </tr>
+        <tr>
+            <td class="col1 buttons" colspan="4">
                 <input name="modify_alias_id" value="{$MODIFY_ALIAS_ID}" type="hidden" />
-{include file="button_inline.tpl" BUTTON_CAPTION="modify"}
+{include file="button_confirm.tpl" BUTTON_CAPTION="confirm"}
+{include file="button_decline.tpl" BUTTON_LOCATION="user.php" BUTTON_CAPTION="discard" BUTTON_TITLE="take me back"}
             </td>
         </tr>
     </table>

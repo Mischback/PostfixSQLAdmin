@@ -12,7 +12,7 @@
             <td class="col1"><img src="./templates/default/gfx/icon_envelope.gif" title="local-part of the alias" /></td>
             <td class="col2"></td>
             <td class="col3"><img src="./templates/default/gfx/icon_world.gif" title="the name of the domain" /></td>
-            <td class="col4"><img src="./templates/default/gfx/icon_envelope.gif" title="destination of the alias" /></td>
+            <td class="col4"><img src="./templates/default/gfx/icon_hand.gif" title="destination of the alias" /></td>
             <td class="col5"></td>
             <td class="col6"></td>
         </tr>
