@@ -104,7 +104,8 @@
             $db->Disconnect();
 
             /* check our results */
-            if ( $tmp_user_id !== NULL && $tmp_domain_id !== NULL && $tmp_username !== NULL && $tmp_domain_name !== NULL ) {
+            if ( $tmp_user_id !== NULL && $tmp_domain_id !== NULL &&
+                $tmp_username !== NULL && $tmp_domain_name !== NULL ) {
                 return array(
                     'user_id'       => $tmp_user_id,
                     'username'      => $tmp_username,

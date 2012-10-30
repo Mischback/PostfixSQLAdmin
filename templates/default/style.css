@@ -261,36 +261,52 @@ div#domain_modify div#domain_modify_form_box input {
 }
 
 
-/* ***** USER ***** */
-table.user_list td.col1 {
+/* ***** USER / ALIAS ***** */
+table.user_list td.col1,
+table.alias_list td.col1 {
     padding-right:      5px;
     font-weight:        bold;
     border-right:       1px solid #aaa;
 }
-table.user_list td.col2 {
+table.user_list td.col2,
+table.alias_list td.col2 {
     padding:            0 0 0 5px;
 }
-table.user_list td.col3 {
+table.user_list td.col3,
+table.alias_list td.col3 {
     padding:            0 5px 0 0;
     border-right:       1px solid #aaa;
 }
-table.user_list tr.headline td.col1 {
+table.alias_list td.col4 {
+    padding:            0 5px;
+    border-right:       1px solid #aaa;
+}
+table.user_list tr.headline td.col1,
+table.alias_list tr.headline td.col1,
+table.alias_list tr.headline td.col4 {
     text-align:         center;
 }
 
-div#user_overview table.create_new_user {
+div#user_overview table.create_new_user,
+div#alias_overview table.create_new_alias {
     margin:             5px 0 10px 10px;
 }
 div#user_overview table.create_new_user td.col1 input,
-div#user_overview table.create_new_user td.col3 select {
+div#user_overview table.create_new_user td.col3 select,
+div#alias_overview table.create_new_alias td.col1 input,
+div#alias_overview table.create_new_alias td.col3 select {
     margin:             0px 5px;
 }
-div#user_overview table.create_new_user td.col2 {
+div#user_overview table.create_new_user td.col2,
+div#alias_overview table.create_new_alias td.col2 {
     font-size:          12pt;
     font-weight:        bold;
 }
 div#user_overview table.create_new_user button.inline>div>div>div {
     background-image:   url(gfx/button_inline_create_user.gif);
+}
+div#alias_overview table.create_new_alias button.inline>div>div>div {
+    background-image:   url(gfx/button_inline_create_alias.gif);
 }
 div#user_create p,
 div#user_modify p,
@@ -304,33 +320,44 @@ div#user_resetpassword div#resetpassword_form_box {
 }
 div#user_create div#user_create_form_box input,
 div#user_modify div#user_modify_form_box input,
-div#user_resetpassword div#resetpassword_form_box input {
+div#user_resetpassword div#resetpassword_form_box input,
+div#alias_modify div#alias_modify_form_box input {
     margin:             10px 0;
     font-size:          14pt;
     width:              300px;
 }
-div#page_user_confirm_delete {
+div#page_user_confirm_delete,
+div#page_alias_confirm_delete {
     margin:             20px 0 30px 0;
     text-align:         center;
 }
 div#page_user_confirm_delete button.confirm:hover>div,
-div#page_user_confirm_delete button.confirm:hover>div>div>div {
+div#page_user_confirm_delete button.confirm:hover>div>div>div,
+div#page_alias_confirm_delete button.confirm:hover>div,
+div#page_alias_confirm_delete button.confirm:hover>div>div>div {
     background-position:    0 -99px;
 }
-div#page_user_confirm_delete button.confirm:hover>div>div {
+div#page_user_confirm_delete button.confirm:hover>div>div,
+div#page_alias_confirm_delete button.confirm:hover>div>div {
     background-position:    100% -99px;
 }
-div#user_modify div#user_modify_form_box table {
+div#user_modify div#user_modify_form_box table,
+div#alias_modify div#alias_modify_form_box table {
     margin: 0 auto;
 }
-div#user_modify div#user_modify_form_box table td.col2 {
+div#user_modify div#user_modify_form_box table td.col2,
+div#alias_modify div#alias_modify_form_box table td.col2 {
     padding:            0 5px;
     font-size:          16pt;
     font-weight:        bold;
 }
-div#user_modify div#user_modify_form_box select {
+div#user_modify div#user_modify_form_box select,
+div#alias_modify div#alias_modify_form_box select {
     margin:             10px 0;
     font-size:          14pt;
+}
+div#alias_modify div#alias_modify_form_box table td.buttons {
+    text-align:         center;
 }
 
 
