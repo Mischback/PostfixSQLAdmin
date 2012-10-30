@@ -160,6 +160,28 @@
             /* terminate the connection */
             $db->Disconnect();
         }
+
+
+        /** @brief  Deletes an existing alias
+         *  @param  INT $id
+         */
+        public function deleteAliasByID($id) {
+
+            /* connect to the database */
+            $db = new Database();
+
+            /* prepare the statement */
+            $db->Prepare('DELETE FROM aliases WHERE alias_id = ? LIMIT 1');
+
+            /* bind the parameter */
+            $db->BindParam(1, $id);
+
+            /* execute the statement */
+            $db->StmtExecute();
+
+            /* terminate the connection */
+            $db->Disconnect();
+        }
     }
 
 ?>

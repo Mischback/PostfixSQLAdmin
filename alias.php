@@ -37,6 +37,55 @@
     }
 
 
+    /* DELETE EXISTING ALIAS
+     * Deletion is splitted in two steps:
+     *      01: select the alias to be deleted
+     *      02: confirm deletion
+     */
+
+    /* step 01 */
+    if ( isset($_POST['delete_alias_id']) && ($_POST['delete_alias_id'] != '') ) {
+
+        $tmp_alias = new Alias($_POST['delete_alias_id']);
+
+        /* validation */
+        if ( $tmp_alias->getAliasID() != $_POST['delete_alias_id'] ) {
+            // TODO: insert smart error handling here!
+            die('Invalid alias ID');
+        }
+
+        /* store the necessary information in the session */
+        $_SESSION['delete_alias'] = $_POST['delete_alias_id'];
+
+        /* prepare the display of step 02 */
+        $frontend->assign('DELETE_ALIAS_ID', $_POST['delete_alias_id']);
+        $frontend->assign('DELETE_ALIAS_FULL', $tmp_alias->getAlias());
+        $frontend->assign('DELETE_ALIAS_DESTINATION', $tmp_alias->getDestination());
+        $frontend->display('alias_delete_confirm.tpl');
+
+        die;
+    }
+
+    /* step 02 */
+    if ( isset($_POST['delete_confirm_id']) && ($_POST['delete_confirm_id'] != '') ) {
+
+        /* SECURITY CHECK
+         * Do the given fields match the information of step 01?
+         */
+        if ( $_POST['delete_confirm_id'] != $_SESSION['delete_alias'] ) {
+            die('SECURITY BREAKING DETECTED!');
+        }
+
+        $tmp_alias = new Alias($_POST['delete_confirm_id']);
+
+        /* this will delete this alias */
+        $tmp_alias->delete();
+
+        /* get rid of the session backup */
+        $_SESSION['delete_alias'] = NULL;
+    }
+
+
     /* list aliases
      */
     $alias_list = array();

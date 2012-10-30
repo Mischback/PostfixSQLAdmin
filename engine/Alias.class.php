@@ -122,6 +122,15 @@
                 $this->destination = $tmp_data['destination'];
             }
         }
+
+
+        /** @brief  Deletes the alias object
+         */
+        public function delete() {
+
+            $dao = new AliasDAO();
+            $dao->deleteAliasByID($this->alias_id);
+        }
     }
 
 
