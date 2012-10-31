@@ -85,30 +85,38 @@
         $tmp_dom = new Domain($_POST['modify_domain_id']);
 
         /* validation */
-        if ( $tmp_dom->getDomainID() == $_POST['modify_domain_id'] ) {
-            $frontend->assign('MODIFY_DOMAIN_ID', $_POST['modify_domain_id']);
-            $frontend->assign('MODIFY_DOMAIN_NAME', $tmp_dom->getDomainName());
-            $frontend->assign('MODIFY_DOMAIN_USERS', $tmp_dom->getUserCount());
-            $frontend->display('domain_modify.tpl');
-            die;
-        } else {
+        if ( $tmp_dom->getDomainID() != $_POST['modify_domain_id'] ) {
             // TODO: insert smart error handling here!
+            die('Invalid domain ID!');
         }
+
+        $_SESSION['modify_domain'] = $_POST['modify_domain_id'];
+
+        $frontend->assign('MODIFY_DOMAIN_ID', $_POST['modify_domain_id']);
+        $frontend->assign('MODIFY_DOMAIN_NAME', $tmp_dom->getDomainName());
+        $frontend->assign('MODIFY_DOMAIN_USERS', $tmp_dom->getUserCount());
+        $frontend->assign('MODIFY_DOMAIN_ALIASES', $tmp_dom->getAliasCount());
+        $frontend->display('domain_modify.tpl');
+
+        die;
     }
 
     /* Step 02 */
     if ( isset($_POST['modify_domain_id']) && ($_POST['modify_domain_id'] != '')
         && isset($_POST['modify_domain_name']) && ($_POST['modify_domain_name'] != '') ) {
 
-        $tmp_dom = new Domain($_POST['modify_domain_id']);
-
-        /* validation */
-        if ( $tmp_dom->getDomainID() == $_POST['modify_domain_id'] ) {
-            $tmp_dom->setDomainName($_POST['modify_domain_name']);
-            $tmp_dom = NULL;    /* force the update! TODO: without forced update strange things are happening! */
-        } else {
-            // TODO: insert smart error handling here!
+        /* SECURITY CHECK
+         * Do the given fields match the information of step 01?
+         */
+        if ( $_POST['modify_domain_id'] != $_SESSION['modify_domain'] ) {
+            die('SECURITY BREAKING DETECTED!');
         }
+
+        $tmp_dom = new Domain($_POST['modify_domain_id']);
+        $tmp_dom->setDomainName($_POST['modify_domain_name']);
+        $tmp_dom = NULL;    /* force the update! TODO: without forced update strange things are happening! */
+
+        $_SESSION['modify_domain'] = NULL;
     }
 
 
