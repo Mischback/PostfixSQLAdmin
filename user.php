@@ -141,6 +141,14 @@
 
         $tmp_user = new User($_POST['delete_confirm_id']);
 
+        /* delete all corresponding aliases */
+        $alias_list = new AliasList(NULL, $tmp_user->getUserMail());
+        if ( count($alias_list) !== 0 ) {
+            foreach ( $alias_list as $tmp_alias ) {
+                $tmp_alias->delete();
+            }
+        }
+
         /* this will delete this user */
         $tmp_user->delete();
 
@@ -171,6 +179,16 @@
          * We will use this to verify the information in step 02
          */
         $_SESSION['modify_user'] = $_POST['modify_user_id'];
+
+        /* Will this affect any aliases? */
+        $alias_list = new AliasList(NULL, $tmp_user->getUserMail());
+        if ( count($alias_list) !== 0 ) {
+            $modify_user_alias = array();
+            foreach ( $alias_list as $tmp_alias ) {
+                $modify_user_alias[] = $tmp_alias->getAlias();
+            }
+            $frontend->assign('MODIFY_USER_ALIAS', $modify_user_alias);
+        }
 
         /* prepare the display of step 02 */
         $dd_dom_list = array();
@@ -210,9 +228,22 @@
 
         $tmp_user = new User($_POST['modify_user_id']);
 
+        /* fetch the corresponding alias list */
+        $alias_list = new AliasList(NULL, $tmp_user->getUserMail());
+
         /* make the changes to the user object */
         $tmp_user->setUserName($_POST['modify_user_name']);
         $tmp_user->setDomainID($_POST['modify_user_domain']);
+
+        /* modify all corresponding aliases */
+        if ( count($alias_list) !== 0 ) {
+            foreach ( $alias_list as $tmp_alias ) {
+                $tmp_alias->setDestination($tmp_user->getUserMail());
+                $tmp_alias = NULL;
+            }
+            $alias_list = NULL;
+        }
+
         $tmp_user = NULL;   /* force update of the user object */
 
         /* get rid of the session backup */
