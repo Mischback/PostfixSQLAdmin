@@ -98,7 +98,7 @@
          *  @param  INT $domain
          *  @retval ARRAY
          */
-        public function getAliasList($domain) {
+        public function getAliasList($domain, $destination) {
 
             $result = array();
 
@@ -108,7 +108,10 @@
             /* prepare the statment */
             $sql = 'SELECT a.alias_id FROM aliases AS a, domains AS b WHERE a.domain_id = b.domain_id';
             if ( $domain !== NULL ) {
-                $sql .= ' WHERE domain_id = ?';
+                $sql .= ' AND a.domain_id = ?';
+            }
+            elseif ( $destination !== NULL ) {
+                $sql .= ' AND a.destination = ?';
             }
             $sql .= ' ORDER BY b.domain_name, a.aliasname';
             $db->Prepare($sql);
@@ -116,6 +119,9 @@
             /* bind the parameter */
             if ( $domain !== NULL ) {
                 $db->BindParam(1, $domain);
+            }
+            elseif ( $destination !== NULL ) {
+                $db->BindParam(1, $destination);
             }
 
             /* execute the statement */

@@ -172,7 +172,7 @@
     /** @class  DomainList
      *  @brief  A list of all existing domain ids
      */
-    class DomainList implements Iterator {
+    class DomainList implements Iterator, Countable {
 
         /** @brief  The constructor
          */
@@ -189,6 +189,14 @@
                     $this->list[] = $tmp_dom;
                 }
             }
+        }
+
+
+        /*
+         * The following stuff is required for the countable interface
+         */
+        public function count() {
+            return count($this->list);
         }
 
 

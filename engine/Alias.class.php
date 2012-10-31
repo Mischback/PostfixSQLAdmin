@@ -246,23 +246,31 @@
     /** @class  AliasList
      *  @brief  A list of alias ids
      */
-    class AliasList implements Iterator {
+    class AliasList implements Iterator, Countable {
 
         /** @brief  The constructor
          */
-        public function __construct($domain = NULL) {
+        public function __construct($domain = NULL, $destination = NULL) {
 
             $this->pos = 0;
 
             $dao = new AliasDAO();
 
-            foreach( $dao->getAliasList($domain) as $tmp_id ) {
+            foreach( $dao->getAliasList($domain, $destination) as $tmp_id ) {
                 $tmp_alias = new Alias($tmp_id);
 
                 if ( $tmp_alias->getAliasID() == $tmp_id ) {
                     $this->list[] = $tmp_alias;
                 }
             }
+        }
+
+
+        /*
+         * The following stuff is required for the countable interface
+         */
+        public function count() {
+            return count($this->list);
         }
 
 

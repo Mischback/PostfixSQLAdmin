@@ -231,7 +231,7 @@
     /** @class  UserList
      *  @brief  A list of user ids
      */
-    class UserList implements Iterator {
+    class UserList implements Iterator, Countable {
 
         /** @brief  The constructor
          */
@@ -248,6 +248,14 @@
                     $this->list[] = $tmp_user;
                 }
             }
+        }
+
+
+        /*
+         * The following stuff is required for the countable interface
+         */
+        public function count() {
+            return count($this->list);
         }
 
 

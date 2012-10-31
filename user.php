@@ -111,6 +111,16 @@
          */
         $_SESSION['delete_user'] = $_POST['delete_user_id'];
 
+        /* Will this affect any aliases? */
+        $alias_list = new AliasList(NULL, $tmp_user->getUserMail());
+        if ( count($alias_list) !== 0 ) {
+            $del_user_alias = array();
+            foreach ( $alias_list as $tmp_alias ) {
+                $del_user_alias[] = $tmp_alias->getAlias();
+            }
+            $frontend->assign('DELETE_USER_ALIAS', $del_user_alias);
+        }
+
         /* prepare the display of step 02 */
         $frontend->assign('DELETE_USER_ID', $_POST['delete_user_id']);
         $frontend->assign('DELETE_USER_MAIL', $tmp_user->getUserMail());
