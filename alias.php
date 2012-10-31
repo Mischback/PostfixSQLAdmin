@@ -28,6 +28,13 @@
         }
 
         /* validation */
+        $tmp_user = new User(NULL, $_POST['create_alias_name'], $_POST['create_alias_domain']);
+        if ( $tmp_user->getUserID() !== NULL ) {
+            /* a user with the same name/domain already exists */
+            // TODO: insert smart error handling here!
+            die('eMail with same address already exists!');
+        }
+
         $tmp_alias = new Alias(NULL, $_POST['create_alias_name'], $_POST['create_alias_domain'], $_POST['create_alias_destination']);
 
         if ( $tmp_alias->getDestination() != $_POST['create_alias_destination'] ) {
@@ -140,6 +147,14 @@
          */
         if ( $_POST['modify_alias_id'] != $_SESSION['modify_alias'] ) {
             die('SECURITY BREAKING DETECTED!');
+        }
+
+        /* check for User objects with same address */
+        $tmp_user = new User(NULL, $_POST['modify_alias_name'], $_POST['modify_alias_domain']);
+        if ( $tmp_user->getUserID() !== NULL ) {
+            /* a user with the same name/domain already exists */
+            // TODO: insert smart error handling here!
+            die('eMail with same address already exists!');
         }
 
         $tmp_alias = new Alias($_POST['modify_alias_id']);
