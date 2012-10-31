@@ -10,8 +10,9 @@
 
 
     /* Gentlemen, start your engines! */
-    require_once('./engine/User.class.php');
+    require_once('./engine/Alias.class.php');
     require_once('./engine/Domain.class.php');
+    require_once('./engine/User.class.php');
 
 
     /* MAGIC STARTS HERE! */
@@ -34,6 +35,12 @@
         }
 
         /* validation */
+        $tmp_alias = new Alias(NULL, $_POST['create_user_username'], $_POST['create_user_domain']);
+        if ( $tmp_alias->getAliasID() !== NULL ) {
+            // TODO: insert smart error handling here!
+            die('Alias with same address already exists!');
+        }
+
         $tmp_user = new User(NULL, $_POST['create_user_username'], $_POST['create_user_domain']);
 
         if ( $tmp_user->getUserName() == $_POST['create_user_username']
@@ -183,6 +190,12 @@
          */
         if ( $_POST['modify_user_id'] != $_SESSION['modify_user'] ) {
             die('SECURITY BREAKING DETECTED!');
+        }
+
+        $tmp_alias = new Alias(NULL, $_POST['modify_user_name'], $_POST['modify_user_domain']);
+        if ( $tmp_alias->getAliasID() !== NULL ) {
+            // TODO: insert smart error handling here!
+            die('Alias with same address already exists!');
         }
 
         $tmp_user = new User($_POST['modify_user_id']);
