@@ -149,6 +149,8 @@
         $tmp_alias->setDestination($_POST['modify_alias_destination']);
 
         $tmp_alias = NULL;
+
+        $_SESSION['modify_alias'] = NULL;
     }
 
 

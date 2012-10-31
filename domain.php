@@ -39,28 +39,36 @@
         $tmp_dom = new Domain($_POST['delete_domain_id']);
 
         /* validation */
-        if ( $tmp_dom->getDomainID() == $_POST['delete_domain_id'] ) {
-            $frontend->assign('DELETE_DOMAIN_ID', $_POST['delete_domain_id']);
-            $frontend->assign('DELETE_DOMAIN_NAME', $tmp_dom->getDomainName());
-            $frontend->assign('DELETE_DOMAIN_USERS', $tmp_dom->getUserCount());
-            $frontend->display('domain_delete_confirm.tpl');
-            die;
-        } else {
+        if ( $tmp_dom->getDomainID() != $_POST['delete_domain_id'] ) {
             // TODO: insert smart error handling here!
+            die('Invalid domain ID!');
         }
+
+        $_SESSION['delete_domain'] = $_POST['delete_domain_id'];
+
+        $frontend->assign('DELETE_DOMAIN_ID', $_POST['delete_domain_id']);
+        $frontend->assign('DELETE_DOMAIN_NAME', $tmp_dom->getDomainName());
+        $frontend->assign('DELETE_DOMAIN_USERS', $tmp_dom->getUserCount());
+        $frontend->assign('DELETE_DOMAIN_ALIASES', $tmp_dom->getAliasCount());
+        $frontend->display('domain_delete_confirm.tpl');
+
+        die;
     }
 
     /* Step 02 */
     if ( isset($_POST['delete_confirm_id']) && ($_POST['delete_confirm_id'] != '') ) {
 
-        $tmp_dom = new Domain($_POST['delete_confirm_id']);
-
-        /* validation */
-        if ( $tmp_dom->getDomainID() == $_POST['delete_confirm_id'] ) {
-            $tmp_dom->deleteDomain();
-        } else {
-            // TODO: insert smart error handling here!
+        /* SECURITY CHECK
+         * Do the given fields match the information of step 01?
+         */
+        if ( $_POST['delete_confirm_id'] != $_SESSION['delete_confirm'] ) {
+            die('SECURITY BREAKING DETECTED!');
         }
+
+        $tmp_dom = new Domain($_POST['delete_confirm_id']);
+        $tmp_dom->deleteDomain();
+
+        $_SESSION['delete_domain'] = NULL;
     }
 
 
