@@ -61,7 +61,7 @@
         /* SECURITY CHECK
          * Do the given fields match the information of step 01?
          */
-        if ( $_POST['delete_confirm_id'] != $_SESSION['delete_confirm'] ) {
+        if ( $_POST['delete_confirm_id'] != $_SESSION['delete_domain'] ) {
             die('SECURITY BREAKING DETECTED!');
         }
 
