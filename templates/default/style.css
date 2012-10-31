@@ -221,7 +221,8 @@ table.domain_list td.col1 {
     text-align:         left;
     border-right:       1px solid #aaa;
 }
-table.domain_list td.col2 {
+table.domain_list td.col2,
+table.domain_list td.col3 {
     padding:            0 5px 0 15px;
     text-align:         right;
     border-right:       1px solid #aaa;

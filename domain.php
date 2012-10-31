@@ -111,6 +111,7 @@
             'id'    => $dom->getDomainID(),
             'name'  => $dom->getDomainName(),
             'users' => $dom->getUserCount(),
+            'aliases' => $dom->getAliasCount(),
         );
     }
 

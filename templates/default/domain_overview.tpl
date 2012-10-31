@@ -11,6 +11,7 @@
         <tr class="headline {cycle name="listing_row" values="odd,even"}">
             <td class="col1"><img src="./templates/default/gfx/icon_world.gif" title="the name of the domain" /></td>
             <td class="col2"><img src="./templates/default/gfx/icon_envelope.gif" title="number of all users of this domain" /></td>
+            <td class="col3"><img src="./templates/default/gfx/icon_hand.gif" title="number of all aliases of this domain" /></td>
             <td></td>
             <td></td>
         </tr>
@@ -18,10 +19,11 @@
         <tr class="{cycle name="listing_row" values="odd,even"}">
             <td class="col1">{$DOMAIN_LIST[row].name}</td>
             <td class="col2">{$DOMAIN_LIST[row].users}</td>
-            <td class="col3 modify">
+            <td class="col3">{$DOMAIN_LIST[row].aliases}</td>
+            <td class="col4 modify">
 {include file="form_domain_overview_modify.tpl" DOMAIN_ID=$DOMAIN_LIST[row].id}
             </td>
-            <td class="col4 delete">
+            <td class="col5 delete">
 {include file="form_domain_overview_delete.tpl" DOMAIN_ID=$DOMAIN_LIST[row].id}
             </td>
         </tr>

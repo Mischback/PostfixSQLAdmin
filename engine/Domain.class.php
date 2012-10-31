@@ -90,6 +90,18 @@
         }
 
 
+        /** @brief  The number of aliases of this domain
+         */
+        private $domain_alias_count = NULL;
+
+        /** @brief  Returns the domain's alias count
+         *  @retval INT $domain_alias_count
+         */
+        public function getAliasCount() {
+            return $this->domain_alias_count;
+        }
+
+
         /** @brief  The constructor
          *  @param  INT $id
          *  @param  STRING $name
@@ -125,6 +137,7 @@
                 $this->domain_id = $tmp_data['id'];
                 $this->domain_name = $tmp_data['name'];
                 $this->domain_user_count = $tmp_data['users'];
+                $this->domain_alias_count = $tmp_data['aliases'];
             }
         }
 

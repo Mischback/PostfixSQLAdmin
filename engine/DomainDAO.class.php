@@ -45,12 +45,13 @@
             $tmp_id = NULL;
             $tmp_name = NULL;
             $tmp_users = NULL;
+            $tmp_aliases = NULL;
 
             /* connect to the database */
             $db = new Database();
 
             /* prepare the statment */
-            $sql = 'SELECT a.domain_id AS id, a.domain_name AS name, COUNT(b.user_id) AS users FROM domains AS a LEFT JOIN users AS b ON (a.domain_id = b.domain_id) WHERE ';
+            $sql = 'SELECT a.domain_id AS id, a.domain_name AS name, COUNT(b.user_id) AS users, COUNT(c.alias_id) AS aliases FROM domains AS a LEFT JOIN users AS b ON (a.domain_id = b.domain_id) LEFT JOIN aliases AS c ON (a.domain_id = c.domain_id) WHERE ';
             $sql .= $where;
             $sql .= ' GROUP BY (a.domain_id) LIMIT 1';
             $db->Prepare($sql);
@@ -65,6 +66,7 @@
             $db->BindColumn(1, $tmp_id);
             $db->BindColumn(2, $tmp_name);
             $db->BindColumn(3, $tmp_users);
+            $db->BindColumn(4, $tmp_aliases);
 
             /* fetch the result */
             $db->Fetch();
@@ -73,8 +75,8 @@
             $db->Disconnect();
 
             /* check our results */
-            if ( $tmp_id !== NULL && $tmp_name !== NULL && $tmp_users !== NULL ) {
-                return array('id'=>$tmp_id, 'name'=>$tmp_name, 'users'=>$tmp_users);
+            if ( $tmp_id !== NULL && $tmp_name !== NULL && $tmp_users !== NULL && $tmp_aliases !== NULL ) {
+                return array('id'=>$tmp_id, 'name'=>$tmp_name, 'users'=>$tmp_users, 'aliases'=>$tmp_aliases);
             } else {
                 return false;
             }
