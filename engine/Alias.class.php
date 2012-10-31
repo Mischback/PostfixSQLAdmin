@@ -167,8 +167,25 @@
             if ( isset($id) ) {
                 $tmp_data = $dao->getAliasByID($id);
             }
+            elseif ( isset($name) && isset($domain_id) && !isset($destination) ) {
+            
+                $parsed_name = checkLocalAddress($name);
+                if ( $parsed_name === false ) {
+                    // TODO: insert smart error handling here!
+                    die('__construct() - mode getAliasByNameAndDomainID(): $name does not match mail-regex!');
+                }
+
+                $tmp_data = $dao->getAliasByNameAndDomainID($parsed_name, $domain_id);
+            }
             elseif ( isset($name) && isset($domain_id) && isset($destination) ) {
-                $tmp_data = $dao->getAliasByNameAndDomainID($name, $domain_id);
+
+                $parsed_name = checkLocalAddress($name);
+                if ( $parsed_name === false ) {
+                    // TODO: insert smart error handling here!
+                    die('__construct() - mode createUser(): $name does not match mail-regex!');
+                }
+
+                $tmp_data = $dao->getAliasByNameAndDomainID($parsed_name, $domain_id);
 
                 if ( !$tmp_data ) {
                     /* here we create new aliases!
@@ -176,12 +193,6 @@
                      * check the $domain_id, because the FK constraint of the
                      * database will only allow valid numbers here.
                      */
-
-                    $parsed_name = checkLocalAddress($name);
-                    if ( $parsed_name === false ) {
-                        // TODO: insert smart error handling here!
-                        die('__construct() - mode createUser(): $name does not match mail-regex!');
-                    }
 
                     $parsed_dest = checkMail($destination);
                     if ( $parsed_dest === false ) {

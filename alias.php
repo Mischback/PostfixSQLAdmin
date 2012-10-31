@@ -12,6 +12,7 @@
     /* Gentlemen, start your engines! */
     require_once('./engine/Alias.class.php');
     require_once('./engine/Domain.class.php');
+    require_once('./engine/User.class.php');
 
 
     /* CREATE NEW ALIAS

@@ -140,13 +140,34 @@
                 $tmp_data = $dao->getUserByID($id);
             }
             elseif ( isset($username) && isset($domain_id) && !isset($password) ) {
-                $tmp_data = $dao->getUserByNameAndDomainID($username, $domain_id);
+
+                $parsed_name = checkLocalAddress($username);
+                if ( $parsed_name === false ) {
+                    // TODO: insert smart error handling here!
+                    die('__construct() - mode getUserByNameAndDomainID(): $username does not match mail-regex');
+                }
+
+                $tmp_data = $dao->getUserByNameAndDomainID($parsed_name, $domain_id);
             }
             elseif ( isset($mail) ) {
-                $tmp_data = $dao->getUserByMail($mail);
+
+                $parsed_mail = checkLocalAddress($username);
+                if ( $parsed_mail === false ) {
+                    // TODO: insert smart error handling here!
+                    die('__construct() - mode getUserByMail(): $mail does not match mail-regex');
+                }
+
+                $tmp_data = $dao->getUserByMail($parsed_mail);
             }
             elseif ( isset($username) && isset($domain_id) && isset($password) ) {
-                $tmp_data = $dao->getUserByNameDomainIDAndPassword($username, $domain_id, $password);
+
+                $parsed_name = checkLocalAddress($username);
+                if ( $parsed_name === false ) {
+                    // TODO: insert smart error handling here!
+                    die('__construct() - mode createUser(): $username does not match mail-regex');
+                }
+
+                $tmp_data = $dao->getUserByNameAndDomainID($parsed_name, $domain_id);
 
                 if ( !$tmp_data ) {
                     /* here we create new users!
@@ -155,14 +176,8 @@
                      * of the database will only allow valid numbers here.
                      */
 
-                    $parsed_name = checkLocalAddress($username);
-                    if ( $parsed_name === false ) {
-                        // TODO: insert smart error handling here!
-                        die('__construct() - mode createUser(): $username does not match mail-regex');
-                    }
-
                     $dao->createUser($parsed_name, $domain_id, $password);
-                    $tmp_data = $dao->getUserByNameDomainIDAndPassword($parsed_name, $domain_id, $password);
+                    $tmp_data = $dao->getUserByNameAndDomainID($parsed_name, $domain_id);
                 }
             }
 

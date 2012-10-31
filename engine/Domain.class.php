@@ -119,15 +119,16 @@
                 $tmp_data = $dao->getDomainByID($id);
             }
             elseif ( isset($name) ) {
-                $tmp_data = $dao->getDomainByName($name);
+
+                $parsed = checkDomain($name);
+
+                if ( $parsed === false ) {
+                    // TODO: insert smart error handling here!
+                    die('__construct() - mode createDomain: $name does not match domain-regex!');
+                }
+                $tmp_data = $dao->getDomainByName($parsed);
 
                 if ( !$tmp_data ) {
-                    $parsed = checkDomain($name);
-
-                    if ( $parsed === false ) {
-                        // TODO: insert smart error handling here!
-                        die('__construct() - mode createDomain: $name does not match domain-regex!');
-                    }
                     $dao->createDomain($parsed);
                     $tmp_data = $dao->getDomainByName($parsed);
                 }

@@ -31,15 +31,6 @@
             return $this->getUser('a.username = ? AND a.domain_id = ?', array($username, $domain_id));
         }
 
-        /** @brief  Fetches all information about a user by $username, $domain_id and $password
-         *  @param  STRING $username
-         *  @param  INT $domain_id
-         *  @param  STRING $password
-         *  @retval MIXED
-         */
-        public function getUserByNameDomainIDAndPassword($username, $domain_id, $password) {
-            return $this->getUser('a.username = ? AND a.domain_id = ? AND a.password = MD5(?)', array($username, $domain_id, $password));
-        }
 
         /** @brief  Fetches all information about a user specified by $mail
          *  @param  STRING $mail
