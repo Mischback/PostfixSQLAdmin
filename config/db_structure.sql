@@ -22,11 +22,13 @@ CREATE TABLE IF NOT EXISTS `domains` (
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `user_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'just a unique ID',
-  `domain_id` int(10) unsigned NOT NULL COMMENT 'FK to ''domains''',
   `username` varchar(255) NOT NULL COMMENT 'the local-part of the mail address',
+  `domain_id` int(10) unsigned NOT NULL COMMENT 'FK to ''domains''',
+  `location` char(32) NOT NULL COMMENT 'the MailDir location',
   `password` char(32) NOT NULL COMMENT 'the user''s password hash',
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `email` (`username`,`domain_id`),
+  UNIQUE KEY `location` (`location`),
   KEY `users_domain` (`domain_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Stores the user information' AUTO_INCREMENT=1 ;
 
@@ -43,8 +45,8 @@ CREATE TABLE IF NOT EXISTS `users` (
 DROP TABLE IF EXISTS `aliases`;
 CREATE TABLE IF NOT EXISTS `aliases` (
   `alias_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'just a unique ID',
-  `domain_id` int(10) unsigned NOT NULL COMMENT 'FK to table ''domains''',
   `aliasname` varchar(255) NOT NULL COMMENT 'local-part of an alias',
+  `domain_id` int(10) unsigned NOT NULL COMMENT 'FK to table ''domains''',
   `destination` varchar(255) NOT NULL COMMENT 'the destination eMail address',
   PRIMARY KEY (`alias_id`),
   UNIQUE KEY `aliasname` (`aliasname`,`domain_id`),
