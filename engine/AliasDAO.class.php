@@ -156,8 +156,8 @@
             $db->Prepare('INSERT INTO aliases VALUES (NULL, ?, ?, ?)');
 
             /* bind the parameter */
-            $db->BindParam(1, $domain_id);
-            $db->BindParam(2, $name);
+            $db->BindParam(1, $name);
+            $db->BindParam(2, $domain_id);
             $db->BindParam(3, $destination);
 
             /* execute the statement */

@@ -162,12 +162,13 @@
             $db = new Database();
 
             /* prepare the statment */
-            $db->Prepare('INSERT INTO users VALUES (NULL, ?, ?, MD5(?))');
+            $db->Prepare('INSERT INTO users VALUES (NULL, ?, ?, ?, MD5(?))');
 
             /* bind the parameter */
-            $db->BindParam(1, $domain_id);
-            $db->BindParam(2, $username);
-            $db->BindParam(3, $password);
+            $db->BindParam(1, $username);
+            $db->BindParam(2, $domain_id);
+            $db->BindParam(3, md5($username.':'.$domain_id.':'.time()));
+            $db->BindParam(4, $password);
 
             /* execute the statement */
             $db->StmtExecute();
