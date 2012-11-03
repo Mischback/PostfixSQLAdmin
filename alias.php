@@ -37,6 +37,11 @@
 
         $tmp_alias = new Alias(NULL, $_POST['create_alias_name'], $_POST['create_alias_domain'], $_POST['create_alias_destination']);
 
+        if ( $tmp_alias->getAliasID() === NULL ) {
+            // TODO: insert smart error handling here!
+            die('Alias could not be created!');
+        }
+
         if ( $tmp_alias->getDestination() != $_POST['create_alias_destination'] ) {
             /* alias already exists! */
             // TODO: insert smart error handling here!

@@ -24,6 +24,11 @@
     if ( isset($_POST['create_domain_name']) && ($_POST['create_domain_name'] != '') ) {
 
         $tmp_dom = new Domain(NULL, $_POST['create_domain_name']);
+
+        if ( $tmp_dom->getDomainID() === NULL ) {
+            // TODO: insert smart error handling here!
+            die('Domain could not be created!');
+        }
     }
 
 

@@ -84,6 +84,11 @@
         /* this should create a new user! */
         $tmp_user = new User(NULL, $_POST['create_user_username'], $_POST['create_user_domain'], $_POST['user_password']);
 
+        if ( $tmp_user->getUserID() === NULL ) {
+            // TODO: insert smart error handling here!
+            die('User could not be created!');
+        }
+
         /* get rid of the session backup */
         $_SESSION['create_user'] = NULL;
     }
